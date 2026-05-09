@@ -32,7 +32,7 @@ Recommended Cloudflare Pages settings:
 
 - Framework preset: `None`
 - Production branch: `master`
-- Build command: `exit 0`
+- Build command: leave blank
 - Build output directory: `/`
 - Root directory: leave empty
 
@@ -46,4 +46,3 @@ When a final domain is chosen:
 2. Run `node generate-pages.js`.
 3. Commit and push the regenerated `sitemap.xml`, `robots.txt`, and landing pages.
 4. Connect the custom domain in Cloudflare Pages.
-
