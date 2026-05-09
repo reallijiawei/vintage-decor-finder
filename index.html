@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vintage Decor Finder | Find Your Vintage Home Style</title>
+    <meta
+      name="description"
+      content="Take a quick vintage decor quiz and get a home style, room ideas, starter items, and shopping keywords for Etsy, eBay, and Amazon."
+    />
+    <link rel="canonical" href="https://vintagedecorfinder.com/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Vintage Decor Finder home">
+        <span class="brand-mark">VDF</span>
+        <span>Vintage Decor Finder</span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="#finder">Finder</a>
+        <a href="#styles">Styles</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#keywords">Shopping Keywords</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero band">
+        <div class="hero-copy">
+          <p class="eyebrow">Vintage shopping, translated</p>
+          <h1>Turn a room idea into vintage decor keywords you can actually shop.</h1>
+          <p class="hero-text">
+            Answer a few practical questions and get a vintage style, starter pieces,
+            color cues, room tips, and search links for Etsy, eBay, and Amazon.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#finder">Start the finder</a>
+            <a class="button ghost" href="#styles">Browse styles</a>
+          </div>
+        </div>
+        <div class="catalog-board" aria-label="Vintage decor sample board">
+          <div class="specimen tall">
+            <span>01</span>
+            <strong>Amber glass vase</strong>
+          </div>
+          <div class="specimen">
+            <span>02</span>
+            <strong>Brass wall sconce</strong>
+          </div>
+          <div class="specimen dark">
+            <span>03</span>
+            <strong>Moody library palette</strong>
+          </div>
+          <div class="specimen print">
+            <span>04</span>
+            <strong>Landscape gallery wall</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="finder" class="finder-section band">
+        <div class="section-heading">
+          <p class="eyebrow">The finder</p>
+          <h2>Build a vintage shopping brief in under a minute.</h2>
+          <p>
+            The tool uses a rule-based style score. No account, no upload, no paid
+            checkout in this first version.
+          </p>
+        </div>
+
+        <div class="finder-grid">
+          <form id="decor-form" class="finder-form">
+            <fieldset>
+              <legend>1. Which room are you decorating?</legend>
+              <div class="chip-grid" data-field="room"></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>2. What is your budget?</legend>
+              <div class="chip-grid" data-field="budget"></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>3. What vibe should the room have?</legend>
+              <div class="chip-grid" data-field="vibe"></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>4. Which colors already feel right?</legend>
+              <div class="chip-grid" data-field="colors"></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>5. How vintage should it feel?</legend>
+              <div class="chip-grid" data-field="intensity"></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>6. What are you shopping for first?</legend>
+              <div class="chip-grid" data-field="focus"></div>
+            </fieldset>
+
+            <button class="button primary full" type="submit">Generate my decor brief</button>
+          </form>
+
+          <aside id="result-panel" class="result-panel" aria-live="polite">
+            <p class="result-kicker">Your result will appear here</p>
+            <h3>Choose your room and vibe to get started.</h3>
+            <p>
+              You will receive a style match, starter items, shopping keywords,
+              color palette, room notes, and marketplace search links.
+            </p>
+            <div class="placeholder-tags">
+              <span>brass</span>
+              <span>jewel tones</span>
+              <span>warm wood</span>
+              <span>gallery wall</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="styles" class="band">
+        <div class="section-heading compact">
+          <p class="eyebrow">Style library</p>
+          <h2>Eight starting points for a collected room.</h2>
+        </div>
+        <div id="style-cards" class="card-grid"></div>
+      </section>
+
+      <section id="rooms" class="band split-band">
+        <div>
+          <p class="eyebrow">Room pages</p>
+          <h2>SEO-ready room ideas for the first launch.</h2>
+          <p>
+            Each room page should explain what to buy first, what to skip, and which
+            shopping terms make the room easier to source.
+          </p>
+        </div>
+        <div id="room-list" class="link-list"></div>
+      </section>
+
+      <section id="keywords" class="band">
+        <div class="section-heading compact">
+          <p class="eyebrow">Shopping keyword pages</p>
+          <h2>Buying-intent pages that point users toward search.</h2>
+        </div>
+        <div id="keyword-cloud" class="keyword-cloud"></div>
+      </section>
+
+      <section class="email-band">
+        <div>
+          <p class="eyebrow">Free checklist</p>
+          <h2>Join the vintage decor checklist waitlist.</h2>
+          <p>
+            Leave your email to be notified when the printable vintage shopping
+            checklist is ready. No account or purchase is required.
+          </p>
+        </div>
+        <form class="email-form" id="email-form">
+          <label for="email">Email address</label>
+          <div>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            <button class="button dark" type="submit">Send checklist</button>
+          </div>
+          <p id="email-message" class="form-message" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Vintage Decor Finder is a style discovery and shopping keyword tool.</p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="affiliate-disclosure.html">Affiliate Disclosure</a>
+      </nav>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

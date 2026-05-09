@@ -1,0 +1,31 @@
+# Dependencies and build artifacts
+node_modules/
+dist/
+.cache/
+
+# Environment and secrets
+.env
+.env.*
+
+# Logs and local runtime files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local machine / Codex / cc-connect maintenance scripts
+cc-connect.config.toml
+codex-with-d-home.cmd
+install-aihot-skill.ps1
+install-anthropic-skills.js
+install-khazix-skills.js
+install-khazix-writer.js
+set-feishu-allow-from.ps1
+switch-codex-home-to-d.ps1
+switch-codex-home-to-d.log
