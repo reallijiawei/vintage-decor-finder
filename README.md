@@ -46,3 +46,17 @@ When a final domain is chosen:
 2. Run `node generate-pages.js`.
 3. Commit and push the regenerated `sitemap.xml`, `robots.txt`, and landing pages.
 4. Connect the custom domain in Cloudflare Pages.
+
+## Email Collection
+
+The homepage email form is ready for a Formspree endpoint.
+
+To connect it:
+
+1. Create a Formspree account and verify your email.
+2. Create a new form in the Formspree dashboard.
+3. Copy the form endpoint, which looks like `https://formspree.io/f/FORM_ID`.
+4. Replace the empty `action=""` on `#email-form` in `index.html` with that endpoint.
+5. Commit and push the change.
+
+Until the endpoint is added, the form will show a setup message instead of pretending to collect emails.

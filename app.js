@@ -304,11 +304,37 @@ function setupForms() {
     document.getElementById("result-panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 
-  document.getElementById("email-form").addEventListener("submit", (event) => {
+  document.getElementById("email-form").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const email = new FormData(event.currentTarget).get("email");
-    document.getElementById("email-message").textContent = `${email} has been added to the checklist waitlist. Connect this form to your email tool before launch.`;
-    event.currentTarget.reset();
+    const emailForm = event.currentTarget;
+    const message = document.getElementById("email-message");
+    const submitButton = emailForm.querySelector("button[type='submit']");
+    const endpoint = emailForm.getAttribute("action");
+
+    if (!endpoint || endpoint === window.location.href) {
+      message.textContent = "Email collection is not connected yet. Add your Formspree endpoint to this form before launch.";
+      return;
+    }
+
+    submitButton.disabled = true;
+    message.textContent = "Sending...";
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: new FormData(emailForm),
+        headers: { Accept: "application/json" },
+      });
+
+      if (!response.ok) throw new Error("Form submission failed");
+
+      message.textContent = "Thanks. You are on the checklist waitlist.";
+      emailForm.reset();
+    } catch (error) {
+      message.textContent = "Something went wrong. Please try again in a moment.";
+    } finally {
+      submitButton.disabled = false;
+    }
   });
 }
 

@@ -164,12 +164,13 @@
             checklist is ready. No account or purchase is required.
           </p>
         </div>
-        <form class="email-form" id="email-form">
+        <form class="email-form" id="email-form" action="" method="POST">
           <label for="email">Email address</label>
           <div>
             <input id="email" name="email" type="email" placeholder="you@example.com" required />
             <button class="button dark" type="submit">Send checklist</button>
           </div>
+          <input type="hidden" name="source" value="homepage-checklist" />
           <p id="email-message" class="form-message" aria-live="polite"></p>
         </form>
       </section>
