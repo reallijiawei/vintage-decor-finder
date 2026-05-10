@@ -13,6 +13,13 @@
       "/api/*"
     ]
   },
+  "d1_databases": [
+    {
+      "binding": "SUBSCRIBERS_DB",
+      "database_name": "vintage_decor_finder_subscribers",
+      "database_id": "2b067133-d987-4881-9f29-ef1fff09897f"
+    }
+  ],
   "compatibility_flags": [
     "nodejs_compat"
   ]
