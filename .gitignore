@@ -29,3 +29,9 @@ install-khazix-writer.js
 set-feishu-allow-from.ps1
 switch-codex-home-to-d.ps1
 switch-codex-home-to-d.log
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
