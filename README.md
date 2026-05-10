@@ -61,3 +61,20 @@ To finish setup:
 4. Commit and push the updated Cloudflare configuration.
 
 If using the Cloudflare dashboard, open the D1 database console and run the contents of `schema.sql` in the SQL query editor.
+
+## Subscriber Export
+
+Subscriber export is available at:
+
+```text
+/admin/subscribers.csv?token=YOUR_EXPORT_TOKEN
+```
+
+Set `EXPORT_TOKEN` as a Cloudflare environment variable or secret before using this route. The token must not be committed to the repository.
+
+The CSV includes:
+
+- `email`
+- `source`
+- `created_at`
+- `updated_at`
