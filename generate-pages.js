@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const siteUrl = (process.env.SITE_URL || "https://vintagedecorfinder.com").replace(/\/+$/, "");
+const siteUrl = (process.env.SITE_URL || "https://vintage-decor-finder.jiaweili19960.workers.dev").replace(/\/+$/, "");
 const lastmod = new Date().toISOString().slice(0, 10);
 
 const stylePages = [

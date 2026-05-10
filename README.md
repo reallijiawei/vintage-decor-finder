@@ -36,7 +36,7 @@ Recommended Cloudflare Pages settings:
 - Build output directory: `/`
 - Root directory: leave empty
 
-After the first deployment, Cloudflare will provide a temporary `*.pages.dev` URL. Use that URL to verify the site before buying or connecting a custom domain.
+After the first deployment, Cloudflare will provide a temporary Cloudflare URL. Use that URL to verify the site before buying or connecting a custom domain.
 
 ## Before Custom Domain Launch
 

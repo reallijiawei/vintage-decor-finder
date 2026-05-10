@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vintagedecorfinder.com/sitemap.xml
+Sitemap: https://vintage-decor-finder.jiaweili19960.workers.dev/sitemap.xml
