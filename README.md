@@ -49,14 +49,13 @@ When a final domain is chosen:
 
 ## Email Collection
 
-The homepage email form is ready for a Formspree endpoint.
+The homepage email form posts to `/api/subscribe`.
 
-To connect it:
+The API is implemented in `src/worker.js` and is designed to store submissions in Cloudflare D1. Until a D1 database is bound as `SUBSCRIBERS_DB`, the endpoint returns a setup message instead of pretending to collect emails.
 
-1. Create a Formspree account and verify your email.
-2. Create a new form in the Formspree dashboard.
-3. Copy the form endpoint, which looks like `https://formspree.io/f/FORM_ID`.
-4. Replace the empty `action=""` on `#email-form` in `index.html` with that endpoint.
-5. Commit and push the change.
+To finish setup:
 
-Until the endpoint is added, the form will show a setup message instead of pretending to collect emails.
+1. Create a Cloudflare D1 database.
+2. Apply `schema.sql` to create the `email_subscribers` table.
+3. Add a D1 binding named `SUBSCRIBERS_DB` to `wrangler.jsonc`.
+4. Commit and push the updated Cloudflare configuration.

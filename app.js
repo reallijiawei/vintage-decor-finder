@@ -311,8 +311,8 @@ function setupForms() {
     const submitButton = emailForm.querySelector("button[type='submit']");
     const endpoint = emailForm.getAttribute("action");
 
-    if (!endpoint || endpoint === window.location.href) {
-      message.textContent = "Email collection is not connected yet. Add your Formspree endpoint to this form before launch.";
+    if (!endpoint) {
+      message.textContent = "Email collection is not connected yet.";
       return;
     }
 
@@ -326,12 +326,16 @@ function setupForms() {
         headers: { Accept: "application/json" },
       });
 
-      if (!response.ok) throw new Error("Form submission failed");
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.message || "Form submission failed");
+      }
 
       message.textContent = "Thanks. You are on the checklist waitlist.";
       emailForm.reset();
     } catch (error) {
-      message.textContent = "Something went wrong. Please try again in a moment.";
+      message.textContent = error.message || "Something went wrong. Please try again in a moment.";
     } finally {
       submitButton.disabled = false;
     }
