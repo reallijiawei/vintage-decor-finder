@@ -1,0 +1,16 @@
+{
+  "name": "Vintage Decor Finder",
+  "short_name": "VDF",
+  "description": "A vintage decor style finder and shopping keyword tool.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff4df",
+  "theme_color": "#5f2a44",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}

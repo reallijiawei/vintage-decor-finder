@@ -186,6 +186,7 @@ function page(title, description, urlPath, body, structuredData = []) {
   const schemas = structuredData
     .map((schema) => `<script type="application/ld+json">${JSON.stringify(schema)}</script>`)
     .join("\n    ");
+  const absoluteUrl = `${siteUrl}/${urlPath}`;
 
   return `<!doctype html>
 <html lang="en">
@@ -194,7 +195,18 @@ function page(title, description, urlPath, body, structuredData = []) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${title} | Vintage Decor Finder</title>
     <meta name="description" content="${description}" />
-    <link rel="canonical" href="${siteUrl}/${urlPath}" />
+    <link rel="canonical" href="${absoluteUrl}" />
+    <meta property="og:site_name" content="Vintage Decor Finder" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="${title} | Vintage Decor Finder" />
+    <meta property="og:description" content="${description}" />
+    <meta property="og:url" content="${absoluteUrl}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="${title} | Vintage Decor Finder" />
+    <meta name="twitter:description" content="${description}" />
+    <meta name="theme-color" content="#5f2a44" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
