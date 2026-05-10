@@ -59,3 +59,5 @@ To finish setup:
 2. Apply `schema.sql` to create the `email_subscribers` table.
 3. Add a D1 binding named `SUBSCRIBERS_DB` to `wrangler.jsonc`.
 4. Commit and push the updated Cloudflare configuration.
+
+If using the Cloudflare dashboard, open the D1 database console and run the contents of `schema.sql` in the SQL query editor.

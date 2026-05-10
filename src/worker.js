@@ -38,16 +38,20 @@ async function handleSubscribe(request, env) {
     return json({ message: "Please enter a valid email address." }, 400);
   }
 
-  await env.SUBSCRIBERS_DB.prepare(
-    `INSERT INTO email_subscribers (email, source, user_agent)
-     VALUES (?, ?, ?)
-     ON CONFLICT(email) DO UPDATE SET
-       source = excluded.source,
-       user_agent = excluded.user_agent,
-       updated_at = CURRENT_TIMESTAMP`
-  )
-    .bind(email, source, request.headers.get("user-agent") || "")
-    .run();
+  try {
+    await env.SUBSCRIBERS_DB.prepare(
+      `INSERT INTO email_subscribers (email, source, user_agent)
+       VALUES (?, ?, ?)
+       ON CONFLICT(email) DO UPDATE SET
+         source = excluded.source,
+         user_agent = excluded.user_agent,
+         updated_at = CURRENT_TIMESTAMP`
+    )
+      .bind(email, source, request.headers.get("user-agent") || "")
+      .run();
+  } catch (error) {
+    return json({ message: "Email database is not ready yet." }, 503);
+  }
 
   return json({ ok: true });
 }
