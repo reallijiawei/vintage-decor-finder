@@ -37,11 +37,19 @@ async function parseSubmission(request) {
   const contentType = request.headers.get("content-type") || "";
 
   if (contentType.includes("application/json")) {
-    return request.json();
+    try {
+      return await request.json();
+    } catch (error) {
+      return {};
+    }
   }
 
-  const formData = await request.formData();
-  return Object.fromEntries(formData.entries());
+  try {
+    const formData = await request.formData();
+    return Object.fromEntries(formData.entries());
+  } catch (error) {
+    return {};
+  }
 }
 
 async function handleSubscribe(request, env) {
