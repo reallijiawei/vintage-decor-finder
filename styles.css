@@ -328,6 +328,16 @@ p {
   padding: clamp(18px, 3vw, 30px);
 }
 
+.form-note {
+  margin: 0 0 24px;
+  padding: 12px 14px;
+  border: 1px solid rgba(183, 137, 67, 0.35);
+  border-radius: var(--radius);
+  background: rgba(183, 137, 67, 0.1);
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
 fieldset {
   margin: 0 0 22px;
   padding: 0;
@@ -359,7 +369,6 @@ legend {
 
 .chip span,
 .keyword-cloud a,
-.placeholder-tags span,
 .result-tags span {
   display: inline-flex;
   align-items: center;
@@ -377,6 +386,11 @@ legend {
   color: var(--cream);
   background: var(--plum);
   border-color: var(--plum);
+}
+
+.chip input:focus-visible + span {
+  outline: 3px solid rgba(183, 137, 67, 0.55);
+  outline-offset: 2px;
 }
 
 .result-panel {
@@ -406,13 +420,21 @@ legend {
   color: var(--muted);
 }
 
-.placeholder-tags,
 .result-tags,
 .market-links {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 18px;
+}
+
+.result-preview-list {
+  margin: 18px 0 0;
+  padding-left: 22px;
+}
+
+.result-preview-list li {
+  margin-bottom: 8px;
 }
 
 .palette {
@@ -435,6 +457,47 @@ legend {
 
 .result-list li {
   margin-bottom: 8px;
+}
+
+.result-section {
+  padding-top: 18px;
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.result-section h4,
+.result-more h4 {
+  margin: 0 0 10px;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+}
+
+.priority-list {
+  margin-top: 0;
+}
+
+.priority-list li {
+  font-weight: 800;
+}
+
+.priority-tags {
+  margin-top: 0;
+}
+
+.result-more {
+  padding-top: 18px;
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.result-more summary {
+  cursor: pointer;
+  color: var(--plum);
+  font-weight: 800;
+}
+
+.result-more h4 {
+  margin-top: 18px;
 }
 
 .market-links a {

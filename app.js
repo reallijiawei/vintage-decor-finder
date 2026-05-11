@@ -242,12 +242,15 @@ function renderResult(formData) {
   const roomLabel = options.room.find(([value]) => value === room)?.[1] || "your room";
   const focusLabel = options.focus.find(([value]) => value === focus)?.[1] || "decor";
   const leadKeyword = style.keywords[0];
+  const focusKeyword = `${roomLabel.toLowerCase()} vintage ${focusLabel.toLowerCase()}`;
   const keywords = [
     ...style.keywords.slice(0, 7),
-    `${roomLabel.toLowerCase()} vintage ${focusLabel.toLowerCase()}`,
+    focusKeyword,
     `${style.name.toLowerCase()} ${roomLabel.toLowerCase()}`,
     `vintage ${focusLabel.toLowerCase()} for ${roomLabel.toLowerCase()}`,
   ];
+  const priorityItems = style.items.slice(0, 3);
+  const priorityKeywords = [leadKeyword, focusKeyword, keywords[2]];
 
   document.getElementById("result-panel").innerHTML = `
     <p class="result-kicker">Your vintage style</p>
@@ -256,20 +259,43 @@ function renderResult(formData) {
     <div class="palette" aria-label="Suggested color palette">
       ${style.colors.map((color) => `<span class="swatch" style="background:${color}"></span>`).join("")}
     </div>
-    <p><strong>Room note:</strong> ${roomTips[room]}</p>
-    <p><strong>Common mistake:</strong> ${style.avoid}</p>
-    <h4>Starter pieces</h4>
-    <ul class="result-list">
-      ${style.items.slice(0, 8).map((item) => `<li>${item}</li>`).join("")}
-    </ul>
-    <h4>Shopping keywords</h4>
-    <div class="result-tags">
-      ${keywords.map((keyword) => `<span>${keyword}</span>`).join("")}
-    </div>
-    <h4>Search marketplaces</h4>
-    <div class="market-links">
-      ${marketplaceNames().map((market) => marketplaceLink(market, leadKeyword)).join("")}
-    </div>
+    <section class="result-section">
+      <h4>Buy these first</h4>
+      <ol class="result-list priority-list">
+        ${priorityItems.map((item) => `<li>${item}</li>`).join("")}
+      </ol>
+    </section>
+    <section class="result-section">
+      <h4>Use these searches</h4>
+      <div class="result-tags priority-tags">
+        ${priorityKeywords.map((keyword) => `<span>${keyword}</span>`).join("")}
+      </div>
+    </section>
+    <section class="result-section">
+      <h4>Room note</h4>
+      <p>${roomTips[room]}</p>
+    </section>
+    <section class="result-section">
+      <h4>Avoid this</h4>
+      <p>${style.avoid}</p>
+    </section>
+    <details class="result-more">
+      <summary>Show more starter pieces and keywords</summary>
+      <h4>More starter pieces</h4>
+      <ul class="result-list">
+        ${style.items.slice(3, 8).map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+      <h4>More keywords</h4>
+      <div class="result-tags">
+        ${keywords.slice(3).map((keyword) => `<span>${keyword}</span>`).join("")}
+      </div>
+    </details>
+    <section class="result-section">
+      <h4>Search marketplaces</h4>
+      <div class="market-links">
+        ${marketplaceNames().map((market) => marketplaceLink(market, leadKeyword, `Search ${market}`)).join("")}
+      </div>
+    </section>
     <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
   `;
 }
