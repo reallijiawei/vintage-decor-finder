@@ -240,7 +240,7 @@ function scoreStyles(formData) {
 const { marketplaceNames, marketplaceUrl } = window.VDFMarketplaces;
 
 function marketplaceLink(marketplace, query, label = marketplace) {
-  return `<a class="button ghost" target="_blank" rel="noreferrer" href="${marketplaceUrl(marketplace, query)}" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">${label}</a>`;
+  return `<a class="button ghost" target="_blank" rel="sponsored nofollow noreferrer" href="${marketplaceUrl(marketplace, query)}" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">${label}</a>`;
 }
 
 function escapeAttribute(value) {
@@ -339,7 +339,7 @@ function renderResult(formData) {
         ${marketplaceNames().map((market) => marketplaceLink(market, leadKeyword, `Search ${market}`)).join("")}
       </div>
     </section>
-    <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
+    <p class="affiliate-note">Some marketplace links may be affiliate links. This does not affect your price.</p>
   `;
 }
 
@@ -373,7 +373,7 @@ function renderRoomsAndKeywords() {
     .join("");
 
   document.getElementById("keyword-cloud").innerHTML = keywordPages
-    .map((keyword) => `<a href="${marketplaceUrl("Etsy", keyword)}" target="_blank" rel="noreferrer" title="Search ${keyword} on Etsy" data-track-outbound data-marketplace="Etsy" data-query="${keyword}">${keyword}</a>`)
+    .map((keyword) => `<a href="${marketplaceUrl("Etsy", keyword)}" target="_blank" rel="sponsored nofollow noreferrer" title="Search ${keyword} on Etsy" data-track-outbound data-marketplace="Etsy" data-query="${keyword}">${keyword}</a>`)
     .join("");
 
   document.getElementById("guide-list").innerHTML = guidePages

@@ -385,14 +385,14 @@ function page(title, description, urlPath, body, structuredData = []) {
 function marketplaceLinks(query) {
   return `
     ${marketplaceLinkButtons(query)}
-    <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
+    <p class="affiliate-note">Some marketplace links may be affiliate links. This does not affect your price.</p>
   `;
 }
 
 function marketplaceLinkButtons(query) {
   return `
     <div class="market-links">
-      ${marketplaceNames().map((marketplace) => `<a class="button ghost" href="${marketplaceUrl(marketplace, query)}" target="_blank" rel="noreferrer" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">Search ${marketplace}</a>`).join("\n      ")}
+      ${marketplaceNames().map((marketplace) => `<a class="button ghost" href="${marketplaceUrl(marketplace, query)}" target="_blank" rel="sponsored nofollow noreferrer" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">Search ${marketplace}</a>`).join("\n      ")}
     </div>
   `;
 }
@@ -599,7 +599,7 @@ for (const guide of guidePages) {
       ${guide.keywords.map((keyword) => `
       <h3>${titleCase(keyword)}</h3>
       ${marketplaceLinkButtons(keyword)}`).join("")}
-      <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
+      <p class="affiliate-note">Some marketplace links may be affiliate links. This does not affect your price.</p>
     </section>
     ${linkList("Related style and room pages", guide.relatedStyles.map((slug) => {
       const style = stylePages.find(([itemSlug]) => itemSlug === slug);
