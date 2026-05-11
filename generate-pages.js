@@ -556,15 +556,6 @@ for (const guide of guidePages) {
     <p class="eyebrow">Vintage decor guide</p>
     <h1>${guide.title}</h1>
     <p class="hero-text">${guide.description}</p>
-    <section class="guide-summary">
-      <div>
-        <span class="editorial-index">Guide focus</span>
-        <p>${guide.intent}</p>
-      </div>
-      <div class="editorial-tags">
-        ${guide.keywords.map((keyword) => `<span>${keyword}</span>`).join("")}
-      </div>
-    </section>
     <section class="content-block">
       <h2>Start here</h2>
       <p>${guide.intent}</p>

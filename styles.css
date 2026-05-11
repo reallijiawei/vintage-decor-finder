@@ -268,54 +268,6 @@ p {
     #ead9c1;
 }
 
-.guide-summary {
-  padding: 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: rgba(255, 249, 238, 0.78);
-  box-shadow: var(--shadow);
-}
-
-.editorial-index {
-  color: var(--brass);
-  font-size: 0.82rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.guide-summary p {
-  color: var(--muted);
-}
-
-.editorial-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
-}
-
-.editorial-tags span {
-  display: inline-flex;
-  min-height: 32px;
-  align-items: center;
-  padding: 6px 10px;
-  border: 1px solid rgba(141, 119, 100, 0.45);
-  border-radius: 999px;
-  background: rgba(255, 249, 238, 0.7);
-  color: var(--ink);
-  font-size: 0.82rem;
-  font-weight: 800;
-}
-
-.guide-summary {
-  min-height: auto;
-  margin: 28px 0 32px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.65fr);
-  gap: 22px;
-  align-items: start;
-}
-
 .section-heading {
   max-width: 790px;
   margin-bottom: 34px;
@@ -712,7 +664,6 @@ input[type="email"] {
   }
 
   .hero,
-  .guide-summary,
   .finder-grid,
   .split-band,
   .email-band,
