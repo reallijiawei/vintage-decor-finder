@@ -252,6 +252,7 @@ function marketplaceLinks(query) {
     <div class="market-links">
       ${marketplaceNames().map((marketplace) => `<a class="button ghost" href="${marketplaceUrl(marketplace, query)}" target="_blank" rel="noreferrer" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">Search ${marketplace}</a>`).join("\n      ")}
     </div>
+    <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
   `;
 }
 

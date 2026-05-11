@@ -259,6 +259,7 @@ function renderResult(formData) {
     <div class="market-links">
       ${marketplaceNames().map((market) => marketplaceLink(market, leadKeyword)).join("")}
     </div>
+    <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
   `;
 }
 
