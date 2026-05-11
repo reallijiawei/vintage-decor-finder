@@ -109,12 +109,12 @@ a {
 }
 
 .hero {
-  min-height: calc(100vh - 70px);
   display: grid;
   grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.82fr);
   gap: clamp(28px, 5vw, 72px);
   align-items: center;
-  padding-top: 52px;
+  padding-top: 54px;
+  padding-bottom: 48px;
 }
 
 .eyebrow {
@@ -268,42 +268,89 @@ p {
     #ead9c1;
 }
 
-.visual-strip {
+.editorial-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
-  padding-top: 0;
+  padding-top: 24px;
 }
 
-.visual-card,
-.guide-visual {
-  margin: 0;
-  overflow: hidden;
+.editorial-card,
+.guide-summary {
+  min-height: 230px;
+  padding: 22px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(255, 249, 238, 0.78);
   box-shadow: var(--shadow);
 }
 
-.visual-card img,
-.guide-visual img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1200 / 780;
-  object-fit: cover;
+.editorial-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.visual-card figcaption {
-  padding: 12px 14px 14px;
-  color: var(--muted);
+.editorial-card.accent {
+  background:
+    linear-gradient(135deg, rgba(215, 168, 95, 0.18), transparent 62%),
+    rgba(255, 249, 238, 0.82);
+}
+
+.editorial-card.dark {
+  color: var(--cream);
+  background: var(--moss);
+}
+
+.editorial-card.dark p,
+.editorial-card.dark .editorial-index {
+  color: #e3c484;
+}
+
+.editorial-index {
+  color: var(--brass);
   font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
 }
 
-.guide-visual {
+.editorial-card h2 {
+  margin: 24px 0 12px;
+  font-size: clamp(1.6rem, 2.4vw, 2.25rem);
+}
+
+.editorial-card p,
+.guide-summary p {
+  color: var(--muted);
+}
+
+.editorial-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.editorial-tags span {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  padding: 6px 10px;
+  border: 1px solid rgba(141, 119, 100, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 249, 238, 0.7);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.guide-summary {
+  min-height: auto;
   margin: 28px 0 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.65fr);
+  gap: 22px;
+  align-items: start;
 }
 
 .section-heading {
@@ -701,7 +748,8 @@ input[type="email"] {
   }
 
   .hero,
-  .visual-strip,
+  .editorial-strip,
+  .guide-summary,
   .finder-grid,
   .split-band,
   .email-band,

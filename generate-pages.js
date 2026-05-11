@@ -424,12 +424,6 @@ function breadcrumbSchema(title, urlPath, sectionName, sectionPath) {
   };
 }
 
-function guideVisual(slug) {
-  if (slug.includes("lighting") || slug.includes("lamps")) return "vintage-lighting-board.png";
-  if (slug.includes("gallery") || slug.includes("wall-art") || slug.includes("mirrors") || slug.includes("rugs")) return "gallery-wall-board.png";
-  return "vintage-shopping-board.png";
-}
-
 function writeFile(filePath, content) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, content);
@@ -562,9 +556,15 @@ for (const guide of guidePages) {
     <p class="eyebrow">Vintage decor guide</p>
     <h1>${guide.title}</h1>
     <p class="hero-text">${guide.description}</p>
-    <figure class="guide-visual">
-      <img src="../../assets/visuals/${guideVisual(guide.slug)}" alt="${guide.title} visual board" width="1200" height="780" loading="lazy" />
-    </figure>
+    <section class="guide-summary">
+      <div>
+        <span class="editorial-index">Guide focus</span>
+        <p>${guide.intent}</p>
+      </div>
+      <div class="editorial-tags">
+        ${guide.keywords.map((keyword) => `<span>${keyword}</span>`).join("")}
+      </div>
+    </section>
     <section class="content-block">
       <h2>Start here</h2>
       <p>${guide.intent}</p>
