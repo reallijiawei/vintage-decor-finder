@@ -218,12 +218,7 @@ function scoreStyles(formData) {
     .sort((a, b) => b.score - a.score);
 }
 
-function marketplaceUrl(marketplace, query) {
-  const encoded = encodeURIComponent(query);
-  if (marketplace === "Etsy") return `https://www.etsy.com/search?q=${encoded}`;
-  if (marketplace === "eBay") return `https://www.ebay.com/sch/i.html?_nkw=${encoded}`;
-  return `https://www.amazon.com/s?k=${encoded}`;
-}
+const { marketplaceNames, marketplaceUrl } = window.VDFMarketplaces;
 
 function marketplaceLink(marketplace, query, label = marketplace) {
   return `<a class="button ghost" target="_blank" rel="noreferrer" href="${marketplaceUrl(marketplace, query)}" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">${label}</a>`;
@@ -262,7 +257,7 @@ function renderResult(formData) {
     </div>
     <h4>Search marketplaces</h4>
     <div class="market-links">
-      ${["Etsy", "eBay", "Amazon"].map((market) => marketplaceLink(market, leadKeyword)).join("")}
+      ${marketplaceNames().map((market) => marketplaceLink(market, leadKeyword)).join("")}
     </div>
   `;
 }
