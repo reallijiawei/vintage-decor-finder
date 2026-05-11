@@ -235,6 +235,36 @@ function marketplaceLink(marketplace, query, label = marketplace) {
   return `<a class="button ghost" target="_blank" rel="noreferrer" href="${marketplaceUrl(marketplace, query)}" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">${label}</a>`;
 }
 
+function escapeAttribute(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+async function copyToClipboard(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+
+  try {
+    const copied = document.execCommand("copy");
+    if (!copied) throw new Error("Copy command failed");
+  } finally {
+    textarea.remove();
+  }
+}
+
 function renderResult(formData) {
   const [{ style }] = scoreStyles(formData);
   const room = formData.get("room");
@@ -269,6 +299,10 @@ function renderResult(formData) {
       <h4>Use these searches</h4>
       <div class="result-tags priority-tags">
         ${priorityKeywords.map((keyword) => `<span>${keyword}</span>`).join("")}
+      </div>
+      <div class="copy-row">
+        <button class="button ghost copy-button" type="button" data-copy-text="${escapeAttribute(priorityKeywords.join("\n"))}">Copy top searches</button>
+        <span class="copy-status" aria-live="polite"></span>
       </div>
     </section>
     <section class="result-section">
@@ -339,6 +373,28 @@ function renderRoomsAndKeywords() {
 
 function setupForms() {
   const form = document.getElementById("decor-form");
+  const resultPanel = document.getElementById("result-panel");
+
+  resultPanel.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-copy-text]");
+    if (!button) return;
+
+    const status = button.parentElement.querySelector(".copy-status");
+    button.disabled = true;
+
+    try {
+      await copyToClipboard(button.dataset.copyText);
+      status.textContent = "Copied.";
+    } catch (error) {
+      status.textContent = "Copy failed. Select the keywords manually.";
+    } finally {
+      window.setTimeout(() => {
+        status.textContent = "";
+        button.disabled = false;
+      }, 2400);
+    }
+  });
+
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     renderResult(new FormData(form));

@@ -484,6 +484,26 @@ legend {
   margin-top: 0;
 }
 
+.copy-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.copy-button {
+  min-height: 38px;
+  padding: 0 13px;
+  font-size: 0.78rem;
+}
+
+.copy-status {
+  color: var(--moss);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
 .result-more {
   padding-top: 18px;
   margin-top: 18px;
