@@ -32,7 +32,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260511-mobile-polish" />
+    <link rel="stylesheet" href="styles.css?v=20260512-commercial-polish" />
   </head>
   <body>
     <header class="site-header">
@@ -88,6 +88,30 @@
             </div>
           </div>
         </aside>
+      </section>
+
+      <section class="band process-section" aria-labelledby="process-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">How it works</p>
+          <h2 id="process-title">From vague room idea to shopping plan.</h2>
+        </div>
+        <div class="process-grid">
+          <article>
+            <span>01</span>
+            <h3>Answer practical questions.</h3>
+            <p>Choose the room, budget, mood, colors, vintage intensity, and the category you want to shop first.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Get a style direction.</h3>
+            <p>The finder matches your answers to a vintage style, color palette, first buys, and common mistakes.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Search with better terms.</h3>
+            <p>Use the suggested keywords and marketplace buttons to compare real listings instead of guessing.</p>
+          </article>
+        </div>
       </section>
 
       <section id="finder" class="finder-section band">
@@ -192,22 +216,48 @@
         <div id="guide-list" class="link-list"></div>
       </section>
 
+      <section class="band faq-section" aria-labelledby="faq-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Questions</p>
+          <h2 id="faq-title">Before you shop.</h2>
+        </div>
+        <div class="faq-grid">
+          <details>
+            <summary>Is Vintage Decor Finder free?</summary>
+            <p>Yes. The finder, style pages, keyword pages, and buying guides are free to use.</p>
+          </details>
+          <details>
+            <summary>Do I need to create an account?</summary>
+            <p>No. You can generate a shopping brief without signing up or uploading anything.</p>
+          </details>
+          <details>
+            <summary>Are marketplace links affiliate links?</summary>
+            <p>Some links may become affiliate links. If that happens, it will not change your price. See the affiliate disclosure for details.</p>
+          </details>
+          <details>
+            <summary>Does this replace measuring and condition checks?</summary>
+            <p>No. The tool gives search direction. Always check dimensions, condition notes, wiring, shipping cost, and return policy before buying.</p>
+          </details>
+        </div>
+      </section>
+
       <section class="email-band">
         <div>
           <p class="eyebrow">Free checklist</p>
           <h2>Join the vintage decor checklist waitlist.</h2>
           <p>
             Leave your email to be notified when the printable vintage shopping
-            checklist is ready. No account or purchase is required.
+            checklist is ready. No account, purchase, or paid checkout is required.
           </p>
         </div>
         <form class="email-form" id="email-form" action="/api/subscribe" method="POST">
           <label for="email">Email address</label>
           <div>
             <input id="email" name="email" type="email" placeholder="you@example.com" required />
-            <button class="button dark" type="submit">Send checklist</button>
+            <button class="button dark" type="submit">Join waitlist</button>
           </div>
           <input type="hidden" name="source" value="homepage-checklist" />
+          <p class="privacy-note">Used only for checklist updates. Unsubscribe anytime.</p>
           <p id="email-message" class="form-message" aria-live="polite"></p>
         </form>
       </section>
@@ -226,7 +276,7 @@
 
     <script src="marketplaces.js?v=20260511-affiliate-config"></script>
     <script src="tracking.js?v=20260511-outbound-clicks"></script>
-    <script src="app.js?v=20260511-copy-searches"></script>
+    <script src="app.js?v=20260512-style-images"></script>
     <!-- Cloudflare Web Analytics -->
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"b25547a7fdae42c883d5d9797b6a375b"}'></script>
     <!-- End Cloudflare Web Analytics -->

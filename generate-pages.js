@@ -19,6 +19,17 @@ const stylePages = [
   ["vintage-gallery-wall", "Vintage Gallery Wall", "Landscape prints, portraits, botanical art, carved frames, and collected wall layouts."],
 ];
 
+const styleImages = {
+  "70s-vintage-decor": "warm-70s-revival.webp",
+  "grandmillennial-decor": "grandmillennial-cozy.webp",
+  "neo-deco-decor": "neo-deco-apartment.webp",
+  "vintage-modern-mix": "vintage-modern-mix.webp",
+  "cottage-vintage-decor": "cottage-vintage.webp",
+  "art-deco-inspired-decor": "art-deco-inspired.webp",
+  "vintage-lighting": "vintage-lighting.webp",
+  "vintage-gallery-wall": "vintage-gallery-wall.webp",
+};
+
 const roomPages = [
   ["vintage-living-room", "Vintage Living Room Ideas", "Build the room around lighting, art, pillows, and one vintage anchor piece."],
   ["vintage-bedroom", "Vintage Bedroom Ideas", "Use soft light, layered textiles, vintage trays, framed art, and one warm wood surface."],
@@ -446,11 +457,15 @@ staticPages.forEach(([urlPath, priority]) => {
 for (const [slug, title, description] of stylePages) {
   const urlPath = `styles/${slug}/`;
   const note = styleNotes[slug];
+  const image = styleImages[slug];
   sitemapEntries.push(sitemapUrl(urlPath, "0.8"));
   writeFile(path.join("styles", slug, "index.html"), page(title, description, urlPath, `
     <p class="eyebrow">Style guide</p>
     <h1>${title}</h1>
     <p class="hero-text">${description}</p>
+    <figure class="style-hero-figure">
+      <img src="../../assets/style-images/${image}" alt="${title} room example" width="900" height="900" loading="eager" />
+    </figure>
     <section class="content-block">
       <h2>How this style works</h2>
       <p>${title} works best when the room has one clear anchor and a few repeated materials. Start with ${note.materials.slice(0, 3).join(", ")}, then add smaller accents only after the room direction is clear.</p>

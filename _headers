@@ -17,6 +17,9 @@
 /marketplaces.js
   Cache-Control: public, max-age=3600
 
+/assets/style-images/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /sitemap.xml
   Cache-Control: public, max-age=3600
 

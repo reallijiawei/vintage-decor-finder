@@ -56,6 +56,7 @@ const styles = [
     id: "warm-70s-revival",
     name: "Warm 70s Revival",
     summary: "Amber glass, brass, velvet, warm wood, and earthy color without turning the room into a time capsule.",
+    image: "assets/style-images/warm-70s-revival.webp",
     colors: ["#8b4f2d", "#c48943", "#f1d49a", "#6e2342", "#3f5b45"],
     tags: ["colorful", "cozy", "warm-wood", "brass", "jewel-tones", "bold", "lighting", "glassware"],
     bestRooms: ["living-room", "bedroom", "reading-nook", "small-apartment"],
@@ -67,6 +68,7 @@ const styles = [
     id: "vintage-modern-mix",
     name: "Vintage Modern Mix",
     summary: "Clean modern bones softened with patina, old frames, sculptural lamps, and one or two storied pieces.",
+    image: "assets/style-images/vintage-modern-mix.webp",
     colors: ["#f7efe1", "#a98255", "#2f2a26", "#547182", "#b78943"],
     tags: ["minimal", "balanced", "cream", "black", "blue", "furniture", "wall-art", "subtle"],
     bestRooms: ["living-room", "home-office", "small-apartment", "dining-room"],
@@ -78,6 +80,7 @@ const styles = [
     id: "grandmillennial-cozy",
     name: "Grandmillennial Cozy",
     summary: "Pattern, pleats, florals, needlepoint, scallops, and inherited-home charm made apartment friendly.",
+    image: "assets/style-images/grandmillennial-cozy.webp",
     colors: ["#f7d8cf", "#6d8b74", "#f9f0df", "#934e42", "#547182"],
     tags: ["cozy", "romantic", "cream", "blue", "subtle", "textiles", "wall-art", "accessories"],
     bestRooms: ["bedroom", "reading-nook", "bathroom", "living-room"],
@@ -89,6 +92,7 @@ const styles = [
     id: "neo-deco-apartment",
     name: "Neo Deco Apartment",
     summary: "Art Deco geometry, glossy accents, brass, black, and sculptural shapes scaled for real apartments.",
+    image: "assets/style-images/neo-deco-apartment.webp",
     colors: ["#111111", "#d4a64d", "#efe2c2", "#31585a", "#6e2342"],
     tags: ["elegant", "dramatic", "black", "brass", "jewel-tones", "bold", "lighting", "furniture"],
     bestRooms: ["dining-room", "living-room", "bathroom", "home-office"],
@@ -100,6 +104,7 @@ const styles = [
     id: "cottage-vintage",
     name: "Cottage Vintage",
     summary: "Soft wood, garden prints, stoneware, baskets, linen, and useful old objects with a gentle rural mood.",
+    image: "assets/style-images/cottage-vintage.webp",
     colors: ["#e8dcc2", "#9b8f69", "#6e7d52", "#c47c55", "#f9f4ea"],
     tags: ["rustic", "cozy", "cream", "olive", "terracotta", "balanced", "glassware", "textiles"],
     bestRooms: ["kitchen", "bedroom", "bathroom", "dining-room"],
@@ -111,6 +116,7 @@ const styles = [
     id: "art-deco-inspired",
     name: "Art Deco Inspired",
     summary: "A polished, grown-up vintage direction with mirrors, symmetry, fluting, marble, and evening-room drama.",
+    image: "assets/style-images/art-deco-inspired.webp",
     colors: ["#263b37", "#b78943", "#f7efe1", "#5f223b", "#1d1b1c"],
     tags: ["elegant", "dramatic", "brass", "black", "burgundy", "bold", "lighting", "accessories"],
     bestRooms: ["dining-room", "bathroom", "home-office", "living-room"],
@@ -122,6 +128,7 @@ const styles = [
     id: "moody-library-vintage",
     name: "Moody Library Vintage",
     summary: "Dark shelves, framed art, old books, brass reading lamps, and layered textiles for a quiet study mood.",
+    image: "assets/style-images/moody-library-vintage.webp",
     colors: ["#251c1b", "#2f4a3c", "#b78943", "#6e2342", "#d6c3a4"],
     tags: ["dramatic", "cozy", "black", "olive", "burgundy", "balanced", "wall-art", "lighting"],
     bestRooms: ["home-office", "reading-nook", "living-room", "bedroom"],
@@ -133,6 +140,7 @@ const styles = [
     id: "soft-romantic-vintage",
     name: "Soft Romantic Vintage",
     summary: "A lighter vintage look built with lace, blush, carved frames, milk glass, curved lines, and soft glow.",
+    image: "assets/style-images/soft-romantic-vintage.webp",
     colors: ["#f4d7cf", "#fff6ed", "#b98c76", "#c7a15b", "#7a4953"],
     tags: ["romantic", "elegant", "cream", "burgundy", "subtle", "textiles", "glassware", "accessories"],
     bestRooms: ["bedroom", "bathroom", "reading-nook", "small-apartment"],
@@ -285,6 +293,7 @@ function renderResult(formData) {
   document.getElementById("result-panel").innerHTML = `
     <p class="result-kicker">Your vintage style</p>
     <h3>${style.name}</h3>
+    <img class="result-image" src="${style.image}" alt="${style.name} interior example" loading="lazy" width="900" height="900" />
     <p>${style.summary}</p>
     <div class="palette" aria-label="Suggested color palette">
       ${style.colors.map((color) => `<span class="swatch" style="background:${color}"></span>`).join("")}
@@ -338,6 +347,7 @@ function renderStyleCards() {
   document.getElementById("style-cards").innerHTML = styles
     .map((style, index) => `
       <article class="style-card" id="${style.id}">
+        <img class="style-image" src="${style.image}" alt="${style.name} interior example" loading="lazy" width="900" height="900" />
         <div>
           <span class="card-number">${String(index + 1).padStart(2, "0")}</span>
           <h3>${style.name}</h3>
