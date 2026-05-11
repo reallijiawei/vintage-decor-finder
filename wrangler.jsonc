@@ -20,6 +20,8 @@
       "database_id": "2b067133-d987-4881-9f29-ef1fff09897f"
     }
   ],
+  // EXPORT_TOKEN is configured in Cloudflare Variables and Secrets.
+  // Do not commit the real token in this file.
   "compatibility_flags": [
     "nodejs_compat"
   ]

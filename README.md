@@ -72,6 +72,8 @@ Subscriber export is available at:
 
 Set `EXPORT_TOKEN` as a Cloudflare environment variable or secret before using this route. The token must not be committed to the repository.
 
+For local Wrangler development, copy `.dev.vars.example` to `.dev.vars` and replace the placeholder with a local token. Keep the real Production token in Cloudflare `Variables and Secrets`.
+
 The CSV includes:
 
 - `email`
