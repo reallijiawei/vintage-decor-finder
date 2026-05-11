@@ -33,6 +33,51 @@ function csv(rows, columns, filename) {
   });
 }
 
+async function sha256Hex(value) {
+  const data = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function getExportTokenHash(env) {
+  if (env.EXPORT_TOKEN) {
+    return sha256Hex(env.EXPORT_TOKEN);
+  }
+
+  if (!env.SUBSCRIBERS_DB) {
+    return "";
+  }
+
+  try {
+    const row = await env.SUBSCRIBERS_DB.prepare(
+      `SELECT value FROM app_settings WHERE key = ?`
+    )
+      .bind("export_token_sha256")
+      .first();
+    return row?.value || "";
+  } catch (error) {
+    return "";
+  }
+}
+
+async function authorizeExport(request, env, unconfiguredMessage) {
+  const url = new URL(request.url);
+  const token = url.searchParams.get("token") || "";
+  const expectedHash = await getExportTokenHash(env);
+
+  if (!expectedHash) {
+    return { ok: false, response: json({ message: unconfiguredMessage }, 503) };
+  }
+
+  const actualHash = await sha256Hex(token);
+
+  if (actualHash !== expectedHash) {
+    return { ok: false, response: json({ message: "Unauthorized" }, 401) };
+  }
+
+  return { ok: true };
+}
+
 async function parseSubmission(request) {
   const contentType = request.headers.get("content-type") || "";
 
@@ -92,15 +137,9 @@ async function handleSubscribersExport(request, env) {
     return json({ message: "Method not allowed" }, 405);
   }
 
-  if (!env.EXPORT_TOKEN) {
-    return json({ message: "Subscriber export is not configured yet." }, 503);
-  }
-
-  const url = new URL(request.url);
-  const token = url.searchParams.get("token") || "";
-
-  if (token !== env.EXPORT_TOKEN) {
-    return json({ message: "Unauthorized" }, 401);
+  const authorization = await authorizeExport(request, env, "Subscriber export is not configured yet.");
+  if (!authorization.ok) {
+    return authorization.response;
   }
 
   if (!env.SUBSCRIBERS_DB) {
@@ -163,15 +202,9 @@ async function handleOutboundExport(request, env) {
     return json({ message: "Method not allowed" }, 405);
   }
 
-  if (!env.EXPORT_TOKEN) {
-    return json({ message: "Outbound export is not configured yet." }, 503);
-  }
-
-  const url = new URL(request.url);
-  const token = url.searchParams.get("token") || "";
-
-  if (token !== env.EXPORT_TOKEN) {
-    return json({ message: "Unauthorized" }, 401);
+  const authorization = await authorizeExport(request, env, "Outbound export is not configured yet.");
+  if (!authorization.ok) {
+    return authorization.response;
   }
 
   if (!env.SUBSCRIBERS_DB) {

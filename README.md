@@ -74,6 +74,22 @@ Set `EXPORT_TOKEN` as a Cloudflare environment variable or secret before using t
 
 For local Wrangler development, copy `.dev.vars.example` to `.dev.vars` and replace the placeholder with a local token. Keep the real Production token in Cloudflare `Variables and Secrets`.
 
+If Cloudflare deploys overwrite dashboard variables, store a SHA-256 hash in D1 instead:
+
+```sql
+CREATE TABLE IF NOT EXISTS app_settings (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO app_settings (key, value, updated_at)
+VALUES ('export_token_sha256', 'YOUR_TOKEN_SHA256_HEX', CURRENT_TIMESTAMP)
+ON CONFLICT(key) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+```
+
 The CSV includes:
 
 - `email`
