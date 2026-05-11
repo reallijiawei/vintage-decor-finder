@@ -54,11 +54,11 @@ const keywordPages = [
 ];
 
 const staticPages = [
-  ["about.html", "0.4"],
-  ["contact.html", "0.3"],
-  ["privacy.html", "0.2"],
-  ["terms.html", "0.2"],
-  ["affiliate-disclosure.html", "0.2"],
+  ["about", "0.4"],
+  ["contact", "0.3"],
+  ["privacy", "0.2"],
+  ["terms", "0.2"],
+  ["affiliate-disclosure", "0.2"],
 ];
 
 const styleNotes = {
@@ -233,11 +233,11 @@ function page(title, description, urlPath, body, structuredData = []) {
     <footer class="site-footer">
       <p>Use the finder to turn this idea into a shopping brief.</p>
       <nav class="footer-links" aria-label="Footer navigation">
-        <a href="../../about.html">About</a>
-        <a href="../../contact.html">Contact</a>
-        <a href="../../privacy.html">Privacy</a>
-        <a href="../../terms.html">Terms</a>
-        <a href="../../affiliate-disclosure.html">Affiliate Disclosure</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/affiliate-disclosure">Affiliate Disclosure</a>
       </nav>
     </footer>
     <script src="../../tracking.js?v=20260511-outbound-clicks"></script>
