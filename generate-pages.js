@@ -53,6 +53,129 @@ const keywordPages = [
   "vintage nesting tables",
 ];
 
+const guidePages = [
+  {
+    slug: "how-to-shop-vintage-decor-online",
+    title: "How to Shop Vintage Decor Online",
+    description: "A practical guide to buying vintage decor online, from search terms and measurements to seller checks and red flags.",
+    intent: "Online vintage shopping works best when you search broadly first, then narrow by material, size, condition, and room.",
+    sections: [
+      ["Start with flexible search terms", "Use broad searches like vintage brass lamp, vintage wall art, or vintage ceramic vase before adding style words. Good listings often use simple descriptions rather than perfect design terminology."],
+      ["Check measurements before style", "Photos can make a lamp, mirror, or rug look larger than it is. Compare listed dimensions against the exact wall, table, or floor area before you buy."],
+      ["Read condition notes carefully", "Look for wiring notes on lamps, edge wear on mirrors, fading on textiles, chips on ceramics, and return policies. Vintage charm is useful; structural problems are not."],
+    ],
+    checks: ["Measurements shown clearly", "Condition described in detail", "Seller has recent positive reviews", "Shipping cost is visible before checkout"],
+    redFlags: ["Only one blurry photo", "No dimensions", "Vague condition language", "No return or damage policy"],
+    keywords: ["vintage brass lamp", "vintage wall art", "vintage ceramic vase"],
+    relatedStyles: ["vintage-modern-mix", "vintage-lighting", "vintage-gallery-wall"],
+  },
+  {
+    slug: "how-to-mix-vintage-and-modern-decor",
+    title: "How to Mix Vintage and Modern Decor",
+    description: "Learn how to combine vintage decor with modern furniture without making a room feel cluttered or staged.",
+    intent: "The easiest mix is one vintage anchor, two supporting accents, and enough modern negative space to let old pieces breathe.",
+    sections: [
+      ["Choose one vintage anchor", "Start with a lamp, mirror, art piece, side table, or rug. One strong anchor gives the room a story without turning every surface into a collection."],
+      ["Repeat materials on purpose", "A brass lamp can connect to a brass frame. A warm wood table can connect to a walnut chair. Repetition makes vintage pieces feel intentional."],
+      ["Keep some modern lines", "Modern sofas, simple curtains, or clean shelving help vintage pieces stand out. If every object is ornate, the room loses focus."],
+    ],
+    checks: ["One clear vintage focal point", "Repeated metal or wood tone", "Modern negative space", "Limited color palette"],
+    redFlags: ["Too many small objects", "Every item from a different era", "No repeated material", "Matching sets that feel flat"],
+    keywords: ["warm wood vintage furniture", "vintage table lamp", "vintage picture frame"],
+    relatedStyles: ["vintage-modern-mix", "70s-vintage-decor", "cottage-vintage-decor"],
+  },
+  {
+    slug: "how-to-style-a-vintage-gallery-wall",
+    title: "How to Style a Vintage Gallery Wall",
+    description: "Build a vintage gallery wall with landscapes, portraits, botanical prints, and frames that look collected rather than random.",
+    intent: "A good gallery wall repeats one visual rule: frame finish, mat tone, art subject, or spacing.",
+    sections: [
+      ["Pick a visual rule", "Choose one repeated element before buying. It can be gold frames, wood frames, landscape art, botanical prints, or cream mats."],
+      ["Mix sizes, not everything", "Vary frame sizes while keeping one element consistent. This creates a collected wall that still feels calm."],
+      ["Lay it out before hanging", "Use paper templates or floor planning to test spacing. Vintage frames are often irregular, so measuring matters."],
+    ],
+    checks: ["At least one repeated frame finish", "One larger anchor piece", "Consistent spacing", "Art subjects that share a mood"],
+    redFlags: ["Every frame the same size", "No anchor piece", "Random colors with no repeat", "Frames hung too high"],
+    keywords: ["vintage wall art", "vintage landscape print", "vintage picture frame"],
+    relatedStyles: ["vintage-gallery-wall", "grandmillennial-decor", "vintage-modern-mix"],
+  },
+  {
+    slug: "how-to-choose-vintage-lighting",
+    title: "How to Choose Vintage Lighting",
+    description: "A guide to vintage table lamps, brass lamps, sconces, shades, scale, wiring, and warm room light.",
+    intent: "Vintage lighting changes a room quickly, but scale, shade condition, and wiring matter as much as style.",
+    sections: [
+      ["Check scale first", "Measure the table, nightstand, or wall before falling for a lamp. A beautiful base can still be too tall, too wide, or visually heavy."],
+      ["Inspect shade and wiring", "Look for shade stains, dents, missing hardware, socket notes, and rewiring details. Budget for a new shade if the base is strong."],
+      ["Use warm pools of light", "Vintage rooms look better with layered table lamps and sconces than one bright overhead light."],
+    ],
+    checks: ["Clear height and width", "Shade condition shown", "Wiring status described", "Bulb type and socket visible"],
+    redFlags: ["No scale reference", "Unclear wiring", "Burn marks near socket", "Shade damage not photographed"],
+    keywords: ["vintage brass lamp", "murano glass lamp", "vintage table lamp"],
+    relatedStyles: ["vintage-lighting", "art-deco-inspired-decor", "70s-vintage-decor"],
+  },
+  {
+    slug: "best-vintage-table-lamps",
+    title: "Best Vintage Table Lamps to Search For",
+    description: "The vintage table lamp styles worth searching for first, including brass, ceramic, Murano glass, library lamps, and pleated shades.",
+    intent: "The best vintage table lamp is the one that fits the surface, gives warm light, and has a base material that works with your room.",
+    sections: [
+      ["Brass table lamps", "Search for brass lamps when you want warmth, patina, and a classic reading light feel."],
+      ["Ceramic table lamps", "Ceramic bases work well in bedrooms and cottage rooms because they add color without feeling too formal."],
+      ["Murano-style glass lamps", "Glass lamps are useful in small rooms because they add interest without looking visually heavy."],
+    ],
+    checks: ["Base height fits the table", "Shade diameter is proportional", "Cord and socket are usable", "Seller shows lamp switched on"],
+    redFlags: ["Lamp sold without shade measurements", "Heavy tarnish described as damage", "No working-status note", "Cracked ceramic or glass base"],
+    keywords: ["vintage table lamp", "vintage brass lamp", "murano glass lamp"],
+    relatedStyles: ["vintage-lighting", "vintage-bedroom", "vintage-reading-nook"],
+  },
+  {
+    slug: "best-vintage-wall-art",
+    title: "Best Vintage Wall Art to Search For",
+    description: "Vintage wall art search ideas for landscapes, botanical prints, portraits, carved frames, and collected gallery walls.",
+    intent: "Vintage wall art is one of the easiest ways to add age to a room without changing furniture.",
+    sections: [
+      ["Landscape prints", "Landscapes are flexible because they work in living rooms, bedrooms, offices, and dining rooms."],
+      ["Botanical and floral art", "Botanical prints soften modern rooms and connect well with cottage or grandmillennial decor."],
+      ["Portraits and figure studies", "Portraits add personality, but they work best when balanced with simpler frames or quieter surrounding art."],
+    ],
+    checks: ["Frame and art dimensions", "Mat condition", "Hanging hardware", "Glass glare or cracks disclosed"],
+    redFlags: ["Stock photo instead of actual art", "No frame condition notes", "Warped paper", "Unclear reproduction status"],
+    keywords: ["vintage wall art", "vintage landscape print", "vintage picture frame"],
+    relatedStyles: ["vintage-gallery-wall", "grandmillennial-decor", "vintage-home-office"],
+  },
+  {
+    slug: "best-vintage-mirrors",
+    title: "Best Vintage Mirrors to Search For",
+    description: "How to search for vintage mirrors by shape, frame material, scale, condition, and room placement.",
+    intent: "A vintage mirror can make a room feel larger, brighter, and more finished when the scale and frame suit the space.",
+    sections: [
+      ["Art Deco mirrors", "Search art deco mirror when you want geometry, curves, brass, or a more polished room mood."],
+      ["Carved wood mirrors", "Wood frames are easier to blend into relaxed rooms and can warm up white walls."],
+      ["Small accent mirrors", "Small mirrors work in bathrooms, entry corners, and gallery walls when a large mirror would dominate."],
+    ],
+    checks: ["Overall dimensions", "Mirror glass condition", "Frame depth", "Mounting hardware"],
+    redFlags: ["Silvering damage not shown", "No weight listed", "Frame cracks", "Unclear hanging method"],
+    keywords: ["art deco mirror", "vintage picture frame", "scalloped edge tray"],
+    relatedStyles: ["art-deco-inspired-decor", "neo-deco-decor", "vintage-bathroom"],
+  },
+  {
+    slug: "best-vintage-rugs",
+    title: "Best Vintage Rugs to Search For",
+    description: "A practical guide to searching for vintage rugs by material, size, color, wear, and room use.",
+    intent: "Vintage rugs add pattern and age quickly, but size and wear level decide whether they feel intentional.",
+    sections: [
+      ["Start with room size", "Measure first. A rug that is too small can make even beautiful furniture feel disconnected."],
+      ["Look for forgiving patterns", "Florals, medallions, and small-scale repeats hide wear better than flat light solids."],
+      ["Match wear to the room", "Patina can work in a bedroom or reading nook. High-traffic dining and living rooms need stronger condition."],
+    ],
+    checks: ["Exact dimensions", "Pile condition", "Edge and fringe photos", "Material listed"],
+    redFlags: ["Only folded photos", "No close-up wear images", "Strong odor mentioned", "Unclear return policy"],
+    keywords: ["floral vintage rug", "70s jewel tone decor", "warm wood vintage furniture"],
+    relatedStyles: ["grandmillennial-decor", "cottage-vintage-decor", "vintage-living-room"],
+  },
+];
+
 const staticPages = [
   ["about", "0.4"],
   ["contact", "0.3"],
@@ -225,6 +348,7 @@ function page(title, description, urlPath, body, structuredData = []) {
         <a href="../../index.html#styles">Styles</a>
         <a href="../../index.html#rooms">Rooms</a>
         <a href="../../index.html#keywords">Shopping Keywords</a>
+        <a href="../../index.html#guides">Guides</a>
       </nav>
     </header>
     <main class="band content-page">
@@ -249,10 +373,16 @@ function page(title, description, urlPath, body, structuredData = []) {
 
 function marketplaceLinks(query) {
   return `
+    ${marketplaceLinkButtons(query)}
+    <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
+  `;
+}
+
+function marketplaceLinkButtons(query) {
+  return `
     <div class="market-links">
       ${marketplaceNames().map((marketplace) => `<a class="button ghost" href="${marketplaceUrl(marketplace, query)}" target="_blank" rel="noreferrer" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">Search ${marketplace}</a>`).join("\n      ")}
     </div>
-    <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
   `;
 }
 
@@ -419,6 +549,53 @@ for (const keyword of keywordPages) {
   `, [pageSchema(title, `Shopping keywords and marketplace links for ${keyword}.`, urlPath), breadcrumbSchema(title, urlPath, "Shopping Keywords", "index.html#keywords")]));
 }
 
+for (const guide of guidePages) {
+  const urlPath = `guides/${guide.slug}/`;
+  sitemapEntries.push(sitemapUrl(urlPath, "0.85"));
+  writeFile(path.join("guides", guide.slug, "index.html"), page(guide.title, guide.description, urlPath, `
+    <p class="eyebrow">Vintage decor guide</p>
+    <h1>${guide.title}</h1>
+    <p class="hero-text">${guide.description}</p>
+    <section class="content-block">
+      <h2>Start here</h2>
+      <p>${guide.intent}</p>
+    </section>
+    ${guide.sections.map(([heading, text]) => `
+    <section class="content-block">
+      <h2>${heading}</h2>
+      <p>${text}</p>
+    </section>`).join("")}
+    <section class="content-block">
+      <h2>Buyer checklist</h2>
+      <div class="detail-grid">
+        <div>
+          <h3>Look for</h3>
+          <ul class="result-list">${guide.checks.map((item) => `<li>${item}</li>`).join("")}</ul>
+        </div>
+        <div>
+          <h3>Be careful with</h3>
+          <ul class="result-list">${guide.redFlags.map((item) => `<li>${item}</li>`).join("")}</ul>
+        </div>
+      </div>
+    </section>
+    <section class="finder-form">
+      <h2>Search terms to try</h2>
+      <p>Use these terms as starting points, then add your room, color, size, or material.</p>
+      ${guide.keywords.map((keyword) => `
+      <h3>${titleCase(keyword)}</h3>
+      ${marketplaceLinkButtons(keyword)}`).join("")}
+      <p class="affiliate-note">Some marketplace links may become affiliate links. This does not affect your price.</p>
+    </section>
+    ${linkList("Related style and room pages", guide.relatedStyles.map((slug) => {
+      const style = stylePages.find(([itemSlug]) => itemSlug === slug);
+      const room = roomPages.find(([itemSlug]) => itemSlug === slug);
+      if (style) return `<a href="../../styles/${slug}/">${style[1]}</a>`;
+      if (room) return `<a href="../../rooms/${slug}/">${room[1]}</a>`;
+      return `<a href="../../keywords/${slugify(slug)}/">${titleCase(slug.replace(/-/g, " "))}</a>`;
+    }))}
+  `, [pageSchema(guide.title, guide.description, urlPath), breadcrumbSchema(guide.title, urlPath, "Guides", "index.html#guides")]));
+}
+
 writeFile("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapEntries.join("\n")}
@@ -431,5 +608,5 @@ Allow: /
 Sitemap: ${siteUrl}/sitemap.xml
 `);
 
-console.log("Generated style, room, and keyword pages.");
+console.log("Generated style, room, keyword, and guide pages.");
 console.log(`Generated sitemap.xml and robots.txt for ${siteUrl}.`);

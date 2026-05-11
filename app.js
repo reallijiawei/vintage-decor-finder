@@ -176,6 +176,17 @@ const keywordPages = [
   "vintage nesting tables",
 ];
 
+const guidePages = [
+  ["how-to-shop-vintage-decor-online", "How to Shop Vintage Decor Online"],
+  ["how-to-mix-vintage-and-modern-decor", "How to Mix Vintage and Modern Decor"],
+  ["how-to-style-a-vintage-gallery-wall", "How to Style a Vintage Gallery Wall"],
+  ["how-to-choose-vintage-lighting", "How to Choose Vintage Lighting"],
+  ["best-vintage-table-lamps", "Best Vintage Table Lamps to Search For"],
+  ["best-vintage-wall-art", "Best Vintage Wall Art to Search For"],
+  ["best-vintage-mirrors", "Best Vintage Mirrors to Search For"],
+  ["best-vintage-rugs", "Best Vintage Rugs to Search For"],
+];
+
 function buildOptions() {
   Object.entries(options).forEach(([field, entries]) => {
     const root = document.querySelector(`[data-field="${field}"]`);
@@ -293,6 +304,10 @@ function renderRoomsAndKeywords() {
 
   document.getElementById("keyword-cloud").innerHTML = keywordPages
     .map((keyword) => `<a href="${marketplaceUrl("Etsy", keyword)}" target="_blank" rel="noreferrer" title="Search ${keyword} on Etsy" data-track-outbound data-marketplace="Etsy" data-query="${keyword}">${keyword}</a>`)
+    .join("");
+
+  document.getElementById("guide-list").innerHTML = guidePages
+    .map(([slug, title]) => `<a href="guides/${slug}/">${title}</a>`)
     .join("");
 }
 
