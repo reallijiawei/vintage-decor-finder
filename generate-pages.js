@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const siteUrl = (process.env.SITE_URL || "https://vintage-decor-finder.jiaweili19960.workers.dev").replace(/\/+$/, "");
+const siteUrl = (process.env.SITE_URL || "https://vintagedecorfinder.com").replace(/\/+$/, "");
 const analyticsSnippet = `<!-- Cloudflare Web Analytics -->
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"b25547a7fdae42c883d5d9797b6a375b"}'></script>
     <!-- End Cloudflare Web Analytics -->`;
