@@ -11,6 +11,9 @@
 /app.js
   Cache-Control: public, max-age=3600
 
+/tracking.js
+  Cache-Control: public, max-age=3600
+
 /sitemap.xml
   Cache-Control: public, max-age=3600
 

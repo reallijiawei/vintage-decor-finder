@@ -78,3 +78,23 @@ The CSV includes:
 - `source`
 - `created_at`
 - `updated_at`
+
+## Outbound Click Tracking
+
+Marketplace links report click events to `/api/outbound-click` before sending users to Etsy, eBay, or Amazon. Events are stored in the D1 `outbound_clicks` table.
+
+To finish setup, run the `outbound_clicks` table statement from `schema.sql` in the Cloudflare D1 SQL editor.
+
+Export click data at:
+
+```text
+/admin/outbound-clicks.csv?token=YOUR_EXPORT_TOKEN
+```
+
+The CSV includes:
+
+- `marketplace`
+- `query`
+- `page_path`
+- `target_url`
+- `created_at`

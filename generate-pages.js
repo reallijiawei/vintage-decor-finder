@@ -239,6 +239,7 @@ function page(title, description, urlPath, body, structuredData = []) {
         <a href="../../affiliate-disclosure.html">Affiliate Disclosure</a>
       </nav>
     </footer>
+    <script src="../../tracking.js?v=20260511-outbound-clicks"></script>
     ${analyticsSnippet}
   </body>
 </html>
@@ -249,9 +250,9 @@ function marketplaceLinks(query) {
   const encoded = encodeURIComponent(query);
   return `
     <div class="market-links">
-      <a class="button ghost" href="https://www.etsy.com/search?q=${encoded}" target="_blank" rel="noreferrer">Search Etsy</a>
-      <a class="button ghost" href="https://www.ebay.com/sch/i.html?_nkw=${encoded}" target="_blank" rel="noreferrer">Search eBay</a>
-      <a class="button ghost" href="https://www.amazon.com/s?k=${encoded}" target="_blank" rel="noreferrer">Search Amazon</a>
+      <a class="button ghost" href="https://www.etsy.com/search?q=${encoded}" target="_blank" rel="noreferrer" data-track-outbound data-marketplace="Etsy" data-query="${query}">Search Etsy</a>
+      <a class="button ghost" href="https://www.ebay.com/sch/i.html?_nkw=${encoded}" target="_blank" rel="noreferrer" data-track-outbound data-marketplace="eBay" data-query="${query}">Search eBay</a>
+      <a class="button ghost" href="https://www.amazon.com/s?k=${encoded}" target="_blank" rel="noreferrer" data-track-outbound data-marketplace="Amazon" data-query="${query}">Search Amazon</a>
     </div>
   `;
 }

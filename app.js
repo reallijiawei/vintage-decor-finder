@@ -225,6 +225,10 @@ function marketplaceUrl(marketplace, query) {
   return `https://www.amazon.com/s?k=${encoded}`;
 }
 
+function marketplaceLink(marketplace, query, label = marketplace) {
+  return `<a class="button ghost" target="_blank" rel="noreferrer" href="${marketplaceUrl(marketplace, query)}" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">${label}</a>`;
+}
+
 function renderResult(formData) {
   const [{ style }] = scoreStyles(formData);
   const room = formData.get("room");
@@ -258,7 +262,7 @@ function renderResult(formData) {
     </div>
     <h4>Search marketplaces</h4>
     <div class="market-links">
-      ${["Etsy", "eBay", "Amazon"].map((market) => `<a class="button ghost" target="_blank" rel="noreferrer" href="${marketplaceUrl(market, leadKeyword)}">${market}</a>`).join("")}
+      ${["Etsy", "eBay", "Amazon"].map((market) => marketplaceLink(market, leadKeyword)).join("")}
     </div>
   `;
 }
@@ -292,7 +296,7 @@ function renderRoomsAndKeywords() {
     .join("");
 
   document.getElementById("keyword-cloud").innerHTML = keywordPages
-    .map((keyword) => `<a href="https://www.etsy.com/search?q=${encodeURIComponent(keyword)}" target="_blank" rel="noreferrer" title="Search ${keyword} on Etsy">${keyword}</a>`)
+    .map((keyword) => `<a href="${marketplaceUrl("Etsy", keyword)}" target="_blank" rel="noreferrer" title="Search ${keyword} on Etsy" data-track-outbound data-marketplace="Etsy" data-query="${keyword}">${keyword}</a>`)
     .join("");
 }
 
