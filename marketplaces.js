@@ -16,7 +16,15 @@
       label: "eBay",
       searchBase: "https://www.ebay.com/sch/i.html",
       searchParam: "_nkw",
-      affiliateParams: {},
+      affiliateParams: {
+        mkcid: "1",
+        mkrid: "711-53200-19255-0",
+        siteid: "0",
+        campid: "5339152947",
+        customid: "vdf",
+        toolid: "10001",
+        mkevt: "1",
+      },
     },
     Amazon: {
       label: "Amazon",
