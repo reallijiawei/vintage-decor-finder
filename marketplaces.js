@@ -30,7 +30,9 @@
       label: "Amazon",
       searchBase: "https://www.amazon.com/s",
       searchParam: "k",
-      affiliateParams: {},
+      affiliateParams: {
+        tag: "vintagedecorf-20",
+      },
     },
   };
 
