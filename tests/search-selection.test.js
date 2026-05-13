@@ -2,6 +2,7 @@ const assert = require("node:assert/strict");
 const {
   selectedSearchTerms,
   searchTermsToClipboardText,
+  copyFallbackMessage,
 } = require("../search-selection");
 
 const terms = [
@@ -18,6 +19,11 @@ assert.deepEqual(selectedSearchTerms(terms), [
 assert.equal(
   searchTermsToClipboardText(terms),
   "vintage brass floor lamp\n70s jewel tone decor",
+);
+
+assert.equal(
+  copyFallbackMessage(),
+  "Copy failed. The selected searches are ready below.",
 );
 
 console.log("search selection helpers ok");

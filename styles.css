@@ -588,6 +588,31 @@ legend {
   font-weight: 800;
 }
 
+.manual-copy {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.manual-copy-label {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.manual-copy-text {
+  width: 100%;
+  min-height: 96px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 249, 238, 0.88);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
 .result-more {
   padding-top: 18px;
   margin-top: 18px;

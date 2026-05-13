@@ -16,5 +16,9 @@
     return selectedSearchTerms(items).join("\n");
   }
 
-  return { selectedSearchTerms, searchTermsToClipboardText };
+  function copyFallbackMessage() {
+    return "Copy failed. The selected searches are ready below.";
+  }
+
+  return { selectedSearchTerms, searchTermsToClipboardText, copyFallbackMessage };
 });

@@ -238,7 +238,7 @@ function scoreStyles(formData) {
 }
 
 const { marketplaceNames, marketplaceUrl } = window.VDFMarketplaces;
-const { searchTermsToClipboardText } = window.VDFSearchSelection;
+const { copyFallbackMessage, searchTermsToClipboardText } = window.VDFSearchSelection;
 
 function marketplaceLink(marketplace, query, label = marketplace) {
   return `<a class="button ghost" target="_blank" rel="sponsored nofollow noreferrer" href="${marketplaceUrl(marketplace, query)}" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">${label}</a>`;
@@ -290,6 +290,28 @@ async function copyToClipboard(text) {
   } finally {
     textarea.remove();
   }
+}
+
+function showManualCopyFallback(resultPanel, text, status) {
+  const existing = resultPanel.querySelector("[data-manual-copy]");
+  if (existing) existing.remove();
+
+  const helper = document.createElement("div");
+  helper.className = "manual-copy";
+  helper.dataset.manualCopy = "";
+  helper.innerHTML = `
+    <label class="manual-copy-label" for="manual-copy-text">Copy these searches manually</label>
+    <textarea id="manual-copy-text" class="manual-copy-text" readonly></textarea>
+  `;
+
+  const textarea = helper.querySelector("textarea");
+  textarea.value = text;
+
+  status.parentElement.insertAdjacentElement("afterend", helper);
+  textarea.focus();
+  textarea.select();
+  textarea.setSelectionRange(0, textarea.value.length);
+  status.textContent = copyFallbackMessage();
 }
 
 function renderResult(formData) {
@@ -431,10 +453,12 @@ function setupForms() {
       await copyToClipboard(copyText);
       status.textContent = "Copied.";
     } catch (error) {
-      status.textContent = "Copy failed. Select the keywords manually.";
+      showManualCopyFallback(resultPanel, copyText, status);
     } finally {
       window.setTimeout(() => {
-        status.textContent = "";
+        if (status.textContent === "Copied.") {
+          status.textContent = "";
+        }
         button.disabled = false;
       }, 2400);
     }
