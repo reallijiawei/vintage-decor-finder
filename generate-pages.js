@@ -320,11 +320,14 @@ function titleCase(text) {
   return text.replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-function page(title, description, urlPath, body, structuredData = []) {
+function page(title, description, urlPath, body, structuredData = [], options = {}) {
   const schemas = structuredData
     .map((schema) => `<script type="application/ld+json">${JSON.stringify(schema)}</script>`)
     .join("\n    ");
   const absoluteUrl = `${siteUrl}/${urlPath}`;
+  const imagePath = options.imagePath || "assets/style-images/vintage-modern-mix.webp";
+  const imageUrl = `${siteUrl}/${imagePath.replace(/^\/+/, "")}`;
+  const imageAlt = options.imageAlt || "Vintage decor room example";
 
   return `<!doctype html>
 <html lang="en">
@@ -339,9 +342,12 @@ function page(title, description, urlPath, body, structuredData = []) {
     <meta property="og:title" content="${title} | Vintage Decor Finder" />
     <meta property="og:description" content="${description}" />
     <meta property="og:url" content="${absoluteUrl}" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="${imageUrl}" />
+    <meta property="og:image:alt" content="${imageAlt}" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${title} | Vintage Decor Finder" />
     <meta name="twitter:description" content="${description}" />
+    <meta name="twitter:image" content="${imageUrl}" />
     <meta name="theme-color" content="#5f2a44" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -492,7 +498,10 @@ for (const [slug, title, description] of stylePages) {
     </section>
     ${linkList("Related room guides", note.rooms.map((roomSlug) => `<a href="../../rooms/${roomSlug}/">${roomPages.find(([itemSlug]) => itemSlug === roomSlug)[1]}</a>`))}
     ${linkList("Shopping keywords to start with", note.keywords.map((keyword) => `<a href="../../keywords/${slugify(keyword)}/">${titleCase(keyword)}</a>`))}
-  `, [pageSchema(title, description, urlPath), breadcrumbSchema(title, urlPath, "Styles", "index.html#styles")]));
+  `, [pageSchema(title, description, urlPath), breadcrumbSchema(title, urlPath, "Styles", "index.html#styles")], {
+    imagePath: `assets/style-images/${image}`,
+    imageAlt: `${title} room example`,
+  }));
 }
 
 for (const [slug, title, description] of roomPages) {
