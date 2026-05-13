@@ -238,6 +238,7 @@ function scoreStyles(formData) {
 }
 
 const { marketplaceNames, marketplaceUrl } = window.VDFMarketplaces;
+const { searchTermsToClipboardText } = window.VDFSearchSelection;
 
 function marketplaceLink(marketplace, query, label = marketplace) {
   return `<a class="button ghost" target="_blank" rel="sponsored nofollow noreferrer" href="${marketplaceUrl(marketplace, query)}" data-track-outbound data-marketplace="${marketplace}" data-query="${query}">${label}</a>`;
@@ -249,6 +250,24 @@ function escapeAttribute(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
+}
+
+function searchToggle(keyword, selected = false) {
+  return `
+    <button
+      class="search-tag"
+      type="button"
+      data-search-term="${escapeAttribute(keyword)}"
+      aria-pressed="${selected}"
+    >${keyword}</button>
+  `;
+}
+
+function resultSearchItems(resultPanel) {
+  return Array.from(resultPanel.querySelectorAll("[data-search-term]")).map((button) => ({
+    term: button.dataset.searchTerm,
+    selected: button.getAttribute("aria-pressed") === "true",
+  }));
 }
 
 async function copyToClipboard(text) {
@@ -307,10 +326,10 @@ function renderResult(formData) {
     <section class="result-section">
       <h4>Use these searches</h4>
       <div class="result-tags priority-tags">
-        ${priorityKeywords.map((keyword) => `<span>${keyword}</span>`).join("")}
+        ${priorityKeywords.map((keyword) => searchToggle(keyword, true)).join("")}
       </div>
       <div class="copy-row">
-        <button class="button ghost copy-button" type="button" data-copy-text="${escapeAttribute(priorityKeywords.join("\n"))}">Copy top searches</button>
+        <button class="button ghost copy-button" type="button" data-copy-selected-searches>Copy selected searches</button>
         <span class="copy-status" aria-live="polite"></span>
       </div>
     </section>
@@ -330,7 +349,7 @@ function renderResult(formData) {
       </ul>
       <h4>More keywords</h4>
       <div class="result-tags">
-        ${keywords.slice(3).map((keyword) => `<span>${keyword}</span>`).join("")}
+        ${keywords.slice(3).map((keyword) => searchToggle(keyword)).join("")}
       </div>
     </details>
     <section class="result-section">
@@ -386,14 +405,30 @@ function setupForms() {
   const resultPanel = document.getElementById("result-panel");
 
   resultPanel.addEventListener("click", async (event) => {
-    const button = event.target.closest("[data-copy-text]");
+    const searchTag = event.target.closest("[data-search-term]");
+    if (searchTag) {
+      const selected = searchTag.getAttribute("aria-pressed") === "true";
+      searchTag.setAttribute("aria-pressed", String(!selected));
+      return;
+    }
+
+    const button = event.target.closest("[data-copy-selected-searches]");
     if (!button) return;
 
     const status = button.parentElement.querySelector(".copy-status");
+    const copyText = searchTermsToClipboardText(resultSearchItems(resultPanel));
+    if (!copyText) {
+      status.textContent = "Select at least one search.";
+      window.setTimeout(() => {
+        status.textContent = "";
+      }, 2400);
+      return;
+    }
+
     button.disabled = true;
 
     try {
-      await copyToClipboard(button.dataset.copyText);
+      await copyToClipboard(copyText);
       status.textContent = "Copied.";
     } catch (error) {
       status.textContent = "Copy failed. Select the keywords manually.";
