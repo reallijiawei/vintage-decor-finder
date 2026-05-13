@@ -412,8 +412,7 @@ legend {
 
 .chip span,
 .keyword-cloud a,
-.result-tags span,
-.result-tags .search-tag {
+.result-tags span {
   display: inline-flex;
   align-items: center;
   min-height: 34px;
@@ -424,22 +423,6 @@ legend {
   color: var(--ink);
   font-size: 0.88rem;
   font-weight: 700;
-}
-
-.result-tags .search-tag {
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.result-tags .search-tag[aria-pressed="true"] {
-  color: var(--cream);
-  background: var(--plum);
-  border-color: var(--plum);
-}
-
-.result-tags .search-tag:focus-visible {
-  outline: 3px solid rgba(183, 137, 67, 0.55);
-  outline-offset: 2px;
 }
 
 .chip input:checked + span {
@@ -566,51 +549,6 @@ legend {
 
 .priority-tags {
   margin-top: 0;
-}
-
-.copy-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  margin-top: 12px;
-}
-
-.copy-button {
-  min-height: 38px;
-  padding: 0 13px;
-  font-size: 0.78rem;
-}
-
-.copy-status {
-  color: var(--moss);
-  font-size: 0.86rem;
-  font-weight: 800;
-}
-
-.manual-copy {
-  display: grid;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.manual-copy-label {
-  color: var(--muted);
-  font-size: 0.86rem;
-  font-weight: 800;
-}
-
-.manual-copy-text {
-  width: 100%;
-  min-height: 96px;
-  padding: 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 249, 238, 0.88);
-  color: var(--ink);
-  font: inherit;
-  line-height: 1.5;
-  resize: vertical;
 }
 
 .result-more {
@@ -971,8 +909,7 @@ input[type="email"] {
 
   .chip span,
   .keyword-cloud a,
-  .result-tags span,
-  .result-tags .search-tag {
+  .result-tags span {
     min-height: 40px;
   }
 
