@@ -359,13 +359,13 @@ function page(title, description, urlPath, body, structuredData = [], options = 
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="../../index.html#top"><span class="brand-mark">VDF</span><span>Vintage Decor Finder</span></a>
+      <a class="brand" href="/#top"><span class="brand-mark">VDF</span><span>Vintage Decor Finder</span></a>
       <nav class="top-nav" aria-label="Main navigation">
-        <a href="../../index.html#finder">Finder</a>
-        <a href="../../index.html#styles">Styles</a>
-        <a href="../../index.html#rooms">Rooms</a>
-        <a href="../../index.html#keywords">Shopping Keywords</a>
-        <a href="../../index.html#guides">Guides</a>
+        <a href="/#finder">Finder</a>
+        <a href="/#styles">Styles</a>
+        <a href="/#rooms">Rooms</a>
+        <a href="/#keywords">Shopping Keywords</a>
+        <a href="/#guides">Guides</a>
       </nav>
     </header>
     <main class="band content-page">
@@ -498,7 +498,7 @@ for (const [slug, title, description] of stylePages) {
     </section>
     ${linkList("Related room guides", note.rooms.map((roomSlug) => `<a href="../../rooms/${roomSlug}/">${roomPages.find(([itemSlug]) => itemSlug === roomSlug)[1]}</a>`))}
     ${linkList("Shopping keywords to start with", note.keywords.map((keyword) => `<a href="../../keywords/${slugify(keyword)}/">${titleCase(keyword)}</a>`))}
-  `, [pageSchema(title, description, urlPath), breadcrumbSchema(title, urlPath, "Styles", "index.html#styles")], {
+  `, [pageSchema(title, description, urlPath), breadcrumbSchema(title, urlPath, "Styles", "#styles")], {
     imagePath: `assets/style-images/${image}`,
     imageAlt: `${title} room example`,
   }));
@@ -538,7 +538,7 @@ for (const [slug, title, description] of roomPages) {
     </section>
     ${linkList("Search terms for this room", note.keywords.map((keyword) => `<a href="../../keywords/${slugify(keyword)}/">${titleCase(keyword)}</a>`))}
     ${linkList("Style directions that fit", stylePages.slice(0, 4).map(([styleSlug, styleTitle]) => `<a href="../../styles/${styleSlug}/">${styleTitle}</a>`))}
-  `, [pageSchema(title, description, urlPath), breadcrumbSchema(title, urlPath, "Rooms", "index.html#rooms")]));
+  `, [pageSchema(title, description, urlPath), breadcrumbSchema(title, urlPath, "Rooms", "#rooms")]));
 }
 
 for (const keyword of keywordPages) {
@@ -570,7 +570,7 @@ for (const keyword of keywordPages) {
       ${marketplaceLinks(keyword)}
     </section>
     ${linkList("Useful room guides", roomPages.slice(0, 4).map(([roomSlug, roomTitle]) => `<a href="../../rooms/${roomSlug}/">${roomTitle}</a>`))}
-  `, [pageSchema(title, `Shopping keywords and marketplace links for ${keyword}.`, urlPath), breadcrumbSchema(title, urlPath, "Shopping Keywords", "index.html#keywords")]));
+  `, [pageSchema(title, `Shopping keywords and marketplace links for ${keyword}.`, urlPath), breadcrumbSchema(title, urlPath, "Shopping Keywords", "#keywords")]));
 }
 
 for (const guide of guidePages) {
@@ -617,7 +617,7 @@ for (const guide of guidePages) {
       if (room) return `<a href="../../rooms/${slug}/">${room[1]}</a>`;
       return `<a href="../../keywords/${slugify(slug)}/">${titleCase(slug.replace(/-/g, " "))}</a>`;
     }))}
-  `, [pageSchema(guide.title, guide.description, urlPath), breadcrumbSchema(guide.title, urlPath, "Guides", "index.html#guides")]));
+  `, [pageSchema(guide.title, guide.description, urlPath), breadcrumbSchema(guide.title, urlPath, "Guides", "#guides")]));
 }
 
 writeFile("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
