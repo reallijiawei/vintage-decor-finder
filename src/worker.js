@@ -228,6 +228,11 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname === "/apk" || url.pathname === "/apk/") {
+      const apkPageUrl = new URL("/apk/index.html", url);
+      return env.ASSETS.fetch(new Request(apkPageUrl, request));
+    }
+
     if (url.pathname === "/api/subscribe") {
       return handleSubscribe(request, env);
     }

@@ -2,6 +2,8 @@
 node_modules/
 dist/
 .cache/
+.worker-deploy/
+.wrangler-dry-run/
 
 # Environment and secrets
 .env
@@ -15,6 +17,7 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+app-debug.apk
 
 # OS/editor noise
 .DS_Store
