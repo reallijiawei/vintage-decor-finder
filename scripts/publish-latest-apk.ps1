@@ -3,7 +3,11 @@ param(
   [ValidateScript({ Test-Path -LiteralPath $_ -PathType Leaf })]
   [string]$ApkPath,
 
-  [string]$Destination = ""
+  [string]$Destination = "",
+
+  [string]$UploadedAt = "",
+
+  [switch]$Deploy
 )
 
 $scriptRoot = if ($PSScriptRoot) {
@@ -28,3 +32,27 @@ if (-not (Test-Path -LiteralPath $targetDir -PathType Container)) {
 
 Copy-Item -LiteralPath $source -Destination $target -Force
 Write-Host "Copied APK to $target"
+
+if (-not $UploadedAt) {
+  $UploadedAt = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+}
+
+$repoRoot = Resolve-Path -LiteralPath (Join-Path $scriptRoot "..")
+$pagePaths = @(
+  (Join-Path $repoRoot "apk-page.txt"),
+  (Join-Path $repoRoot "apk\index.html")
+)
+
+foreach ($pagePath in $pagePaths) {
+  if (Test-Path -LiteralPath $pagePath -PathType Leaf) {
+    $content = Get-Content -LiteralPath $pagePath -Raw
+    $content = $content -replace 'Uploaded: [^<]+', "Uploaded: $UploadedAt"
+    Set-Content -LiteralPath $pagePath -Value $content -Encoding ASCII
+  }
+}
+
+Write-Host "Updated APK upload time to $UploadedAt"
+
+if ($Deploy) {
+  & (Join-Path $scriptRoot "deploy-worker-assets.ps1")
+}
