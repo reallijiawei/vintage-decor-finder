@@ -229,8 +229,16 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/apk" || url.pathname === "/apk/") {
-      const apkPageUrl = new URL("/apk.html", url);
-      return env.ASSETS.fetch(new Request(apkPageUrl, request));
+      const apkPageUrl = new URL("/apk-page.txt", url);
+      const assetResponse = await env.ASSETS.fetch(new Request(apkPageUrl, request));
+      const headers = new Headers(assetResponse.headers);
+      headers.set("Cache-Control", "no-store");
+      headers.set("Content-Type", "text/html; charset=utf-8");
+      return new Response(assetResponse.body, {
+        status: assetResponse.status,
+        statusText: assetResponse.statusText,
+        headers,
+      });
     }
 
     if (url.pathname === "/api/subscribe") {

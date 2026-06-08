@@ -23,9 +23,6 @@
 /apk/index.html
   Cache-Control: no-store
 
-/apk.html
-  Cache-Control: no-store
-
 /latest.apk
   Cache-Control: no-store
   Content-Disposition: attachment; filename="latest.apk"
