@@ -229,7 +229,7 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/apk" || url.pathname === "/apk/") {
-      const apkPageUrl = new URL("/apk/index.html", url);
+      const apkPageUrl = new URL("/apk.html", url);
       return env.ASSETS.fetch(new Request(apkPageUrl, request));
     }
 
