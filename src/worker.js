@@ -227,12 +227,6 @@ async function handleOutboundExport(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const host = url.hostname.toLowerCase();
-
-    if (host === "apk.yourdomain.com" && (url.pathname === "/" || url.pathname === "/index.html")) {
-      const apkPageUrl = new URL("/apk/index.html", url);
-      return env.ASSETS.fetch(new Request(apkPageUrl, request));
-    }
 
     if (url.pathname === "/api/subscribe") {
       return handleSubscribe(request, env);

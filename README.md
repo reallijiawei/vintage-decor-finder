@@ -3,14 +3,7 @@
 This repository also includes a dedicated APK download page:
 
 ```text
-/apk/
-```
-
-When `apk.yourdomain.com` is connected to this Cloudflare Pages project, the
-Worker serves the same APK page at:
-
-```text
-https://apk.yourdomain.com/
+https://vintagedecorfinder.com/apk/
 ```
 
 The page always displays:
