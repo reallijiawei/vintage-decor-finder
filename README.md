@@ -1,3 +1,47 @@
+# APK Download Page
+
+This repository also includes a dedicated APK download page:
+
+```text
+/apk/
+```
+
+When `apk.yourdomain.com` is connected to this Cloudflare Pages project, the
+Worker serves the same APK page at:
+
+```text
+https://apk.yourdomain.com/
+```
+
+The page always displays:
+
+```text
+Download latest APK
+Version: 2026-06-08 10:30
+```
+
+The download button points to:
+
+```text
+/latest.apk
+```
+
+## Publish Latest APK From Windows
+
+After your Windows build finishes, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\publish-latest-apk.ps1 -ApkPath "C:\path\to\app-release.apk"
+```
+
+This overwrites:
+
+```text
+latest.apk
+```
+
+If this repo is connected to Cloudflare Pages through GitHub, commit and push the updated `latest.apk` to trigger the deployment. If you use a direct upload flow, deploy the project root after the copy step.
+
 # Vintage Decor Finder
 
 A static vintage decor discovery site with curated style, room, and keyword landing pages.

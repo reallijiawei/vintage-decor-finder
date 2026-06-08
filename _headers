@@ -17,6 +17,17 @@
 /marketplaces.js
   Cache-Control: public, max-age=3600
 
+/apk/
+  Cache-Control: no-store
+
+/apk/index.html
+  Cache-Control: no-store
+
+/latest.apk
+  Cache-Control: no-store
+  Content-Disposition: attachment; filename="latest.apk"
+  Content-Type: application/vnd.android.package-archive
+
 /assets/style-images/*
   Cache-Control: public, max-age=31536000, immutable
 
