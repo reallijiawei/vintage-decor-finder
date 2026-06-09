@@ -40,12 +40,12 @@ function renderImages(images) {
     meta.className = "image-meta";
 
     const link = document.createElement("a");
-    link.href = image.url;
-    link.download = image.name;
-    link.textContent = image.name;
+    link.href = "/latest.png";
+    link.download = "latest.png";
+    link.textContent = "latest.png";
 
     const detail = document.createElement("span");
-    detail.textContent = `${image.uploadedAt || "Uploaded"} ? ${formatBytes(image.size)}`;
+    detail.textContent = `${image.uploadedAt || "Uploaded"} - ${formatBytes(image.size)}`;
 
     meta.append(link, detail);
     item.append(preview, meta);
@@ -87,7 +87,7 @@ form.addEventListener("submit", async (event) => {
     if (!response.ok) throw new Error(data.message || "Upload failed.");
     fileInput.value = "";
     fileName.textContent = "No image selected";
-    setStatus("Uploaded.");
+    setStatus("Uploaded as latest.png.");
     await loadImages();
   } catch (error) {
     setStatus(error.message);

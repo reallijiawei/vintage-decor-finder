@@ -1,5 +1,7 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const MAX_DEVICE_IMAGE_BYTES = 5 * 1024 * 1024;
+const DEVICE_IMAGE_ID = "latest";
+const DEVICE_IMAGE_NAME = "latest.png";
+const MAX_DEVICE_IMAGE_BYTES = 2 * 1024 * 1024;
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -34,15 +36,26 @@ function csv(rows, columns, filename) {
   });
 }
 
-function sanitizeFileName(name) {
-  return String(name || "device-image")
-    .replace(/[/\\?%*:|"<>]/g, "-")
-    .replace(/\s+/g, "-")
-    .slice(0, 100) || "device-image";
-}
-
 function imageStorageUnavailable() {
   return json({ message: "Image storage is not configured yet." }, 503);
+}
+
+function arrayBufferToBase64(buffer) {
+  let binary = "";
+  const bytes = new Uint8Array(buffer);
+  for (let i = 0; i < bytes.length; i += 1) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+function base64ToArrayBuffer(value) {
+  const binary = atob(String(value || ""));
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i += 1) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
 }
 
 async function ensureDeviceImageTable(env) {
@@ -52,7 +65,7 @@ async function ensureDeviceImageTable(env) {
       name TEXT NOT NULL,
       content_type TEXT NOT NULL,
       size INTEGER NOT NULL,
-      data BLOB NOT NULL,
+      data TEXT NOT NULL,
       uploaded_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     )`
   ).run();
@@ -66,21 +79,22 @@ async function handleDeviceImages(request, env) {
   await ensureDeviceImageTable(env);
 
   if (request.method === "GET") {
-    const { results } = await env.SUBSCRIBERS_DB.prepare(
+    const image = await env.SUBSCRIBERS_DB.prepare(
       `SELECT id, name, size, uploaded_at
        FROM device_image_uploads
-       ORDER BY uploaded_at DESC
-       LIMIT 50`
-    ).all();
+       WHERE id = ?`
+    )
+      .bind(DEVICE_IMAGE_ID)
+      .first();
 
     return json({
-      images: (results || []).map((image) => ({
+      images: image ? [{
         id: image.id,
-        name: image.name,
+        name: DEVICE_IMAGE_NAME,
         size: image.size,
         uploadedAt: image.uploaded_at,
-        url: `/api/device-images/${encodeURIComponent(image.id)}`,
-      })),
+        url: "/latest.png",
+      }] : [],
     });
   }
 
@@ -105,27 +119,33 @@ async function handleDeviceImages(request, env) {
   }
 
   if (image.size <= 0 || image.size > MAX_DEVICE_IMAGE_BYTES) {
-    return json({ message: "Image must be between 1 byte and 5 MB." }, 400);
+    return json({ message: "Image must be between 1 byte and 2 MB." }, 400);
   }
 
-  const safeName = sanitizeFileName(image.name);
-  const id = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
-  const body = await image.arrayBuffer();
+  const body = arrayBufferToBase64(await image.arrayBuffer());
+  const uploadedAt = new Date().toISOString().replace("T", " ").slice(0, 19);
 
   await env.SUBSCRIBERS_DB.prepare(
     `INSERT INTO device_image_uploads (id, name, content_type, size, data, uploaded_at)
      VALUES (?, ?, ?, ?, ?, ?)`
+    + ` ON CONFLICT(id) DO UPDATE SET
+      name = excluded.name,
+      content_type = excluded.content_type,
+      size = excluded.size,
+      data = excluded.data,
+      uploaded_at = excluded.uploaded_at`
   )
-    .bind(id, safeName, image.type, image.size, body, new Date().toISOString().replace("T", " ").slice(0, 19))
+    .bind(DEVICE_IMAGE_ID, DEVICE_IMAGE_NAME, image.type, image.size, body, uploadedAt)
     .run();
 
   return json({
     ok: true,
     image: {
-      id,
-      name: safeName,
+      id: DEVICE_IMAGE_ID,
+      name: DEVICE_IMAGE_NAME,
       size: image.size,
-      url: `/api/device-images/${encodeURIComponent(id)}`,
+      uploadedAt,
+      url: "/latest.png",
     },
   });
 }
@@ -142,7 +162,7 @@ async function handleDeviceImageDownload(request, env, imageId) {
   }
 
   const id = decodeURIComponent(imageId || "");
-  if (!/^\d+-[a-f0-9-]{8}$/.test(id)) {
+  if (id !== DEVICE_IMAGE_ID) {
     return json({ message: "Invalid image id." }, 400);
   }
 
@@ -160,10 +180,10 @@ async function handleDeviceImageDownload(request, env, imageId) {
 
   const headers = new Headers();
   headers.set("Cache-Control", "no-store");
-  headers.set("Content-Disposition", `attachment; filename="${String(image.name || "device-image").replace(/"/g, "")}"`);
+  headers.set("Content-Disposition", `attachment; filename="${DEVICE_IMAGE_NAME}"`);
   headers.set("Content-Type", image.content_type || "application/octet-stream");
 
-  return new Response(request.method === "HEAD" ? null : image.data, {
+  return new Response(request.method === "HEAD" ? null : base64ToArrayBuffer(image.data), {
     headers,
   });
 }
@@ -386,6 +406,10 @@ export default {
 
     if (url.pathname === "/api/device-images") {
       return handleDeviceImages(request, env);
+    }
+
+    if (url.pathname === "/latest.png") {
+      return handleDeviceImageDownload(request, env, DEVICE_IMAGE_ID);
     }
 
     if (url.pathname.startsWith("/api/device-images/")) {

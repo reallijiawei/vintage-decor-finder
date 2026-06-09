@@ -19,6 +19,9 @@ yarn-debug.log*
 yarn-error.log*
 app-debug.apk
 .apk-publisher-state.txt
+latest.png
+.latest-image-state.txt
+latest-image-watcher.log
 
 # OS/editor noise
 .DS_Store

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS device_image_uploads (
   name TEXT NOT NULL,
   content_type TEXT NOT NULL,
   size INTEGER NOT NULL,
-  data BLOB NOT NULL,
+  data TEXT NOT NULL,
   uploaded_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
