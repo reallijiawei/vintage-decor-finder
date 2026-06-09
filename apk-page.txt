@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Download latest APK</title>
+    <title>APK and Device Images</title>
     <meta name="robots" content="noindex, nofollow" />
     <style>
       :root {
@@ -11,63 +11,138 @@
         --card: #161b22;
         --text: #f0f6fc;
         --muted: #8b949e;
+        --line: #30363d;
         --accent: #2f81f7;
         --accent-hover: #1f6feb;
       }
-
       * { box-sizing: border-box; }
-
       body {
         min-height: 100vh;
         margin: 0;
         display: grid;
         place-items: center;
-        padding: 24px;
+        padding: 20px;
         color: var(--text);
         background: var(--bg);
         font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
-
       main {
-        width: min(100%, 360px);
-        padding: 32px;
+        width: min(100%, 420px);
+        padding: 24px;
         border-radius: 20px;
         background: var(--card);
-        text-align: center;
       }
-
-      .download {
+      .download, button, .file-label {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 100%;
-        min-height: 56px;
+        min-height: 52px;
+        border: 0;
         border-radius: 999px;
         color: #fff;
         background: var(--accent);
-        font-size: 1.08rem;
+        font-size: 1rem;
         font-weight: 700;
         text-decoration: none;
       }
-
-      .download:hover,
-      .download:focus-visible { background: var(--accent-hover); }
-
-      .uploaded-at {
-        margin: 18px 0 0;
+      .download:hover, .download:focus-visible, button:hover, button:focus-visible, .file-label:hover {
+        background: var(--accent-hover);
+      }
+      .uploaded-at, .status, .empty {
+        margin: 14px 0 0;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.92rem;
+        text-align: center;
+      }
+      .panel {
+        margin-top: 22px;
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+      }
+      h2 {
+        margin: 0 0 14px;
+        font-size: 1rem;
+      }
+      input[type="file"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+      }
+      .file-name {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        text-align: center;
+        word-break: break-all;
+      }
+      button {
+        margin-top: 12px;
+        cursor: pointer;
+      }
+      button:disabled, .file-label.disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+      .image-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .image-item {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        gap: 10px;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+      .image-item img {
+        width: 64px;
+        height: 64px;
+        border-radius: 10px;
+        object-fit: cover;
+        background: #0b0f14;
+      }
+      .image-meta {
+        min-width: 0;
+      }
+      .image-meta a {
+        display: block;
+        color: var(--text);
+        font-weight: 700;
+        text-decoration: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .image-meta span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.82rem;
       }
     </style>
+    <script src="/apk-tools.js" defer></script>
   </head>
   <body>
     <main>
       <a class="download" href="/latest.apk" download>Download latest APK</a>
-      <p class="uploaded-at">Uploaded: 2026-06-08 16:52:11</p>
+      <p class="uploaded-at">Uploaded: 2026-06-09 08:41:28</p>
+
+      <section class="panel" aria-labelledby="image-title">
+        <h2 id="image-title">Device images</h2>
+        <form id="image-form">
+          <label class="file-label" for="image-file">Choose image</label>
+          <input id="image-file" name="image" type="file" accept="image/*" />
+          <p id="file-name" class="file-name">No image selected</p>
+          <button id="upload-button" type="submit" disabled>Upload image</button>
+        </form>
+        <p id="image-status" class="status" aria-live="polite"></p>
+        <div id="image-list" class="image-list" aria-live="polite"></div>
+      </section>
     </main>
   </body>
 </html>
-
-
-
-

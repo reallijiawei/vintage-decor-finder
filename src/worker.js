@@ -1,4 +1,5 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_DEVICE_IMAGE_BYTES = 5 * 1024 * 1024;
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -30,6 +31,140 @@ function csv(rows, columns, filename) {
       "Content-Disposition": `attachment; filename="${filename}"`,
       "Content-Type": "text/csv; charset=utf-8",
     },
+  });
+}
+
+function sanitizeFileName(name) {
+  return String(name || "device-image")
+    .replace(/[/\\?%*:|"<>]/g, "-")
+    .replace(/\s+/g, "-")
+    .slice(0, 100) || "device-image";
+}
+
+function imageStorageUnavailable() {
+  return json({ message: "Image storage is not configured yet." }, 503);
+}
+
+async function ensureDeviceImageTable(env) {
+  await env.SUBSCRIBERS_DB.prepare(
+    `CREATE TABLE IF NOT EXISTS device_image_uploads (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      content_type TEXT NOT NULL,
+      size INTEGER NOT NULL,
+      data BLOB NOT NULL,
+      uploaded_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )`
+  ).run();
+}
+
+async function handleDeviceImages(request, env) {
+  if (!env.SUBSCRIBERS_DB) {
+    return imageStorageUnavailable();
+  }
+
+  await ensureDeviceImageTable(env);
+
+  if (request.method === "GET") {
+    const { results } = await env.SUBSCRIBERS_DB.prepare(
+      `SELECT id, name, size, uploaded_at
+       FROM device_image_uploads
+       ORDER BY uploaded_at DESC
+       LIMIT 50`
+    ).all();
+
+    return json({
+      images: (results || []).map((image) => ({
+        id: image.id,
+        name: image.name,
+        size: image.size,
+        uploadedAt: image.uploaded_at,
+        url: `/api/device-images/${encodeURIComponent(image.id)}`,
+      })),
+    });
+  }
+
+  if (request.method !== "POST") {
+    return json({ message: "Method not allowed" }, 405);
+  }
+
+  let formData;
+  try {
+    formData = await request.formData();
+  } catch (error) {
+    return json({ message: "Expected multipart form data." }, 400);
+  }
+
+  const image = formData.get("image");
+  if (!(image instanceof File)) {
+    return json({ message: "Please choose an image file." }, 400);
+  }
+
+  if (!image.type.startsWith("image/")) {
+    return json({ message: "Only image uploads are allowed." }, 400);
+  }
+
+  if (image.size <= 0 || image.size > MAX_DEVICE_IMAGE_BYTES) {
+    return json({ message: "Image must be between 1 byte and 5 MB." }, 400);
+  }
+
+  const safeName = sanitizeFileName(image.name);
+  const id = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
+  const body = await image.arrayBuffer();
+
+  await env.SUBSCRIBERS_DB.prepare(
+    `INSERT INTO device_image_uploads (id, name, content_type, size, data, uploaded_at)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  )
+    .bind(id, safeName, image.type, image.size, body, new Date().toISOString().replace("T", " ").slice(0, 19))
+    .run();
+
+  return json({
+    ok: true,
+    image: {
+      id,
+      name: safeName,
+      size: image.size,
+      url: `/api/device-images/${encodeURIComponent(id)}`,
+    },
+  });
+}
+
+async function handleDeviceImageDownload(request, env, imageId) {
+  if (!env.SUBSCRIBERS_DB) {
+    return imageStorageUnavailable();
+  }
+
+  await ensureDeviceImageTable(env);
+
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return json({ message: "Method not allowed" }, 405);
+  }
+
+  const id = decodeURIComponent(imageId || "");
+  if (!/^\d+-[a-f0-9-]{8}$/.test(id)) {
+    return json({ message: "Invalid image id." }, 400);
+  }
+
+  const image = await env.SUBSCRIBERS_DB.prepare(
+    `SELECT name, content_type, data
+     FROM device_image_uploads
+     WHERE id = ?`
+  )
+    .bind(id)
+    .first();
+
+  if (!image) {
+    return json({ message: "Image not found." }, 404);
+  }
+
+  const headers = new Headers();
+  headers.set("Cache-Control", "no-store");
+  headers.set("Content-Disposition", `attachment; filename="${String(image.name || "device-image").replace(/"/g, "")}"`);
+  headers.set("Content-Type", image.content_type || "application/octet-stream");
+
+  return new Response(request.method === "HEAD" ? null : image.data, {
+    headers,
   });
 }
 
@@ -247,6 +382,14 @@ export default {
 
     if (url.pathname === "/api/outbound-click") {
       return handleOutboundClick(request, env);
+    }
+
+    if (url.pathname === "/api/device-images") {
+      return handleDeviceImages(request, env);
+    }
+
+    if (url.pathname.startsWith("/api/device-images/")) {
+      return handleDeviceImageDownload(request, env, url.pathname.slice("/api/device-images/".length));
     }
 
     if (url.pathname === "/admin/subscribers.csv") {

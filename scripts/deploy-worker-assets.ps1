@@ -37,6 +37,7 @@ $rootAssets = @(
   "affiliate-disclosure.html",
   "index.html",
   "apk-page.txt",
+  "apk-tools.js",
   "app.js",
   "styles.css",
   "marketplaces.js",
