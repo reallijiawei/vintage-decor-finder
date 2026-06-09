@@ -1,7 +1,7 @@
 param(
   [string]$ApiUrl = "https://vintagedecorfinder.com/api/device-images",
   [string]$DownloadUrl = "https://vintagedecorfinder.com/latest.png",
-  [string]$Destination = "D:\data\AI\codex_projects\remote_codex\latest.png",
+  [string]$Destination = "D:\data\AI\codex_projects\android_apk_build\meditaion\latest.png",
   [int]$IntervalSeconds = 15,
   [switch]$Once
 )
@@ -9,8 +9,9 @@ param(
 $ErrorActionPreference = "Stop"
 $scriptRoot = if ($PSScriptRoot) { $PSScriptRoot } elseif ($MyInvocation.MyCommand.Path) { Split-Path -Parent $MyInvocation.MyCommand.Path } else { Get-Location }
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $scriptRoot "..")
-$logPath = Join-Path $repoRoot "latest-image-watcher.log"
-$statePath = Join-Path $repoRoot ".latest-image-state.txt"
+$destinationDir = Split-Path -Parent $Destination
+$logPath = Join-Path $destinationDir "latest-image-watcher.log"
+$statePath = Join-Path $destinationDir ".latest-image-state.txt"
 
 function Write-Log {
   param([string]$Message)
