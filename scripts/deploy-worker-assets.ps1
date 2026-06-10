@@ -46,8 +46,7 @@ $rootAssets = @(
   "site.webmanifest",
   "robots.txt",
   "sitemap.xml",
-  "_headers",
-  "latest.apk"
+  "_headers"
 )
 
 foreach ($asset in $rootAssets) {

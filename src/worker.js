@@ -1,6 +1,8 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEVICE_IMAGE_ID = "latest";
 const DEVICE_IMAGE_NAME = "latest.png";
+const LATEST_APK_KEY = "latest.apk";
+const LATEST_APK_META_KEY = "latest-apk.json";
 const MAX_DEVICE_IMAGE_BYTES = 2 * 1024 * 1024;
 
 function json(data, status = 200) {
@@ -38,6 +40,58 @@ function csv(rows, columns, filename) {
 
 function imageStorageUnavailable() {
   return json({ message: "Image storage is not configured yet." }, 503);
+}
+
+function apkStorageUnavailable() {
+  return json({ message: "APK storage is not configured yet." }, 503);
+}
+
+async function handleLatestApk(request, env) {
+  if (!env.APK_BUCKET) {
+    return apkStorageUnavailable();
+  }
+
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return json({ message: "Method not allowed" }, 405);
+  }
+
+  const object = await env.APK_BUCKET.get(LATEST_APK_KEY);
+  if (!object) {
+    return json({ message: "latest.apk has not been uploaded yet." }, 404);
+  }
+
+  const headers = new Headers();
+  object.writeHttpMetadata(headers);
+  headers.set("Cache-Control", "no-store");
+  headers.set("Content-Disposition", 'attachment; filename="latest.apk"');
+  headers.set("Content-Type", headers.get("Content-Type") || "application/vnd.android.package-archive");
+  headers.set("ETag", object.httpEtag);
+
+  return new Response(request.method === "HEAD" ? null : object.body, {
+    headers,
+  });
+}
+
+async function handleLatestApkMeta(request, env) {
+  if (!env.APK_BUCKET) {
+    return apkStorageUnavailable();
+  }
+
+  if (request.method !== "GET") {
+    return json({ message: "Method not allowed" }, 405);
+  }
+
+  const object = await env.APK_BUCKET.get(LATEST_APK_META_KEY);
+  if (!object) {
+    return json({ uploadedAt: "", size: 0 });
+  }
+
+  return new Response(object.body, {
+    headers: {
+      "Cache-Control": "no-store",
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
 }
 
 function arrayBufferToBase64(buffer) {
@@ -402,6 +456,14 @@ export default {
 
     if (url.pathname === "/api/outbound-click") {
       return handleOutboundClick(request, env);
+    }
+
+    if (url.pathname === "/latest.apk") {
+      return handleLatestApk(request, env);
+    }
+
+    if (url.pathname === "/api/latest-apk") {
+      return handleLatestApkMeta(request, env);
     }
 
     if (url.pathname === "/api/device-images") {

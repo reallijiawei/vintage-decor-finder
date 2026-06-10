@@ -7,7 +7,7 @@ param(
 
   [string]$UploadedAt = "",
 
-  [switch]$Deploy
+  [string]$BucketName = "vintage-apk-downloads"
 )
 
 $scriptRoot = if ($PSScriptRoot) {
@@ -18,41 +18,47 @@ $scriptRoot = if ($PSScriptRoot) {
   Get-Location
 }
 
-if (-not $Destination) {
-  $Destination = Join-Path $scriptRoot "..\latest.apk"
-}
-
 $source = Resolve-Path -LiteralPath $ApkPath
-$target = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Destination)
-$targetDir = Split-Path -Parent $target
 
-if (-not (Test-Path -LiteralPath $targetDir -PathType Container)) {
-  New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
+if ($Destination) {
+  $target = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Destination)
+  $targetDir = Split-Path -Parent $target
+
+  if (-not (Test-Path -LiteralPath $targetDir -PathType Container)) {
+    New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
+  }
+
+  Copy-Item -LiteralPath $source -Destination $target -Force
+  Write-Host "Copied APK to $target"
 }
-
-Copy-Item -LiteralPath $source -Destination $target -Force
-Write-Host "Copied APK to $target"
 
 if (-not $UploadedAt) {
   $UploadedAt = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 }
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $scriptRoot "..")
-$pagePaths = @(
-  (Join-Path $repoRoot "apk-page.txt"),
-  (Join-Path $repoRoot "apk\index.html")
-)
-
-foreach ($pagePath in $pagePaths) {
-  if (Test-Path -LiteralPath $pagePath -PathType Leaf) {
-    $content = Get-Content -LiteralPath $pagePath -Raw
-    $content = $content -replace 'Uploaded: [^<]+', "Uploaded: $UploadedAt"
-    Set-Content -LiteralPath $pagePath -Value $content -Encoding ASCII
-  }
+$npx = "C:\Program Files\nodejs\npx.cmd"
+if (-not (Test-Path -LiteralPath $npx -PathType Leaf)) {
+  $npx = "npx"
 }
 
-Write-Host "Updated APK upload time to $UploadedAt"
+$sourceItem = Get-Item -LiteralPath $source
+$metadataPath = Join-Path ([IO.Path]::GetTempPath()) "latest-apk.json"
+$metadata = @{
+  uploadedAt = $UploadedAt
+  size = $sourceItem.Length
+  name = "latest.apk"
+} | ConvertTo-Json -Compress
+Set-Content -LiteralPath $metadataPath -Value $metadata -Encoding ASCII
 
-if ($Deploy) {
-  & (Join-Path $scriptRoot "deploy-worker-assets.ps1")
+& $npx wrangler r2 object put "$BucketName/latest.apk" --file $source --content-type "application/vnd.android.package-archive" --content-disposition 'attachment; filename="latest.apk"' --cache-control "no-store" --remote --force
+if ($LASTEXITCODE -ne 0) {
+  throw "Failed to upload latest.apk to R2"
 }
+
+& $npx wrangler r2 object put "$BucketName/latest-apk.json" --file $metadataPath --content-type "application/json; charset=utf-8" --cache-control "no-store" --remote --force
+if ($LASTEXITCODE -ne 0) {
+  throw "Failed to upload latest-apk.json to R2"
+}
+
+Remove-Item -LiteralPath $metadataPath -Force -ErrorAction SilentlyContinue
+Write-Host "Uploaded latest.apk to R2 at $UploadedAt"

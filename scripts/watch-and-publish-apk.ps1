@@ -67,7 +67,7 @@ function Publish-Apk {
 
     $uploadedAt = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     Write-Log "Publishing APK after $Reason; size=$($item.Length); uploadedAt=$uploadedAt"
-    & powershell -NoProfile -ExecutionPolicy Bypass -File $publishScript -ApkPath $ApkPath -UploadedAt $uploadedAt -Deploy 2>&1 | ForEach-Object {
+    & powershell -NoProfile -ExecutionPolicy Bypass -File $publishScript -ApkPath $ApkPath -UploadedAt $uploadedAt 2>&1 | ForEach-Object {
       Write-Log "publish: $_"
     }
     if ($LASTEXITCODE -ne 0) {

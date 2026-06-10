@@ -4,6 +4,7 @@ const form = document.getElementById("image-form");
 const uploadButton = document.getElementById("upload-button");
 const statusText = document.getElementById("image-status");
 const imageList = document.getElementById("image-list");
+const apkUploadedAt = document.getElementById("apk-uploaded-at");
 
 function formatBytes(size) {
   if (!Number.isFinite(size)) return "";
@@ -14,6 +15,19 @@ function formatBytes(size) {
 
 function setStatus(message) {
   statusText.textContent = message || "";
+}
+
+async function loadApkMeta() {
+  if (!apkUploadedAt) return;
+
+  try {
+    const response = await fetch("/api/latest-apk", { cache: "no-store" });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || "Could not load APK metadata.");
+    apkUploadedAt.textContent = data.uploadedAt ? `Uploaded: ${data.uploadedAt}` : "Uploaded: not available";
+  } catch (error) {
+    apkUploadedAt.textContent = "Uploaded: not available";
+  }
 }
 
 function renderImages(images) {
@@ -96,4 +110,5 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
+loadApkMeta();
 loadImages();
