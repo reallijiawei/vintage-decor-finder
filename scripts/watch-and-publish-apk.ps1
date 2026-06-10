@@ -61,8 +61,12 @@ function Publish-Apk {
       return
     }
 
+    if (-not $env:CLOUDFLARE_API_TOKEN -and $env:CLOUDFLARE_R2_APK_TOKEN) {
+      $env:CLOUDFLARE_API_TOKEN = $env:CLOUDFLARE_R2_APK_TOKEN
+    }
+
     if (-not $env:CLOUDFLARE_API_TOKEN) {
-      throw "CLOUDFLARE_API_TOKEN is not available in this process; Wrangler cannot deploy automatically."
+      throw "CLOUDFLARE_R2_APK_TOKEN or CLOUDFLARE_API_TOKEN is not available in this process; Wrangler cannot upload to R2 automatically."
     }
 
     $uploadedAt = Get-Date -Format "yyyy-MM-dd HH:mm:ss"

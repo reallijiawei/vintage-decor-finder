@@ -20,6 +20,14 @@ $scriptRoot = if ($PSScriptRoot) {
 
 $source = Resolve-Path -LiteralPath $ApkPath
 
+if (-not $env:CLOUDFLARE_API_TOKEN -and $env:CLOUDFLARE_R2_APK_TOKEN) {
+  $env:CLOUDFLARE_API_TOKEN = $env:CLOUDFLARE_R2_APK_TOKEN
+}
+
+if (-not $env:CLOUDFLARE_API_TOKEN) {
+  throw "CLOUDFLARE_R2_APK_TOKEN or CLOUDFLARE_API_TOKEN is required to upload latest.apk to R2."
+}
+
 if ($Destination) {
   $target = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Destination)
   $targetDir = Split-Path -Parent $target
