@@ -1,5 +1,5 @@
 param(
-  [string]$ApkPath = "D:\data\AI\codex_projects\android_apk_build\meditaion\app\build\outputs\apk\debug\app-debug.apk",
+  [string]$ApkPath = "D:\data\AI\codex_projects\android_apk_build\mibby\app\build\outputs\apk\debug\app-debug.apk",
   [int]$DebounceSeconds = 8,
   [switch]$SkipInitialPublish,
   [switch]$Once

@@ -1,7 +1,7 @@
 param(
   [string]$ApiUrl = "https://vintagedecorfinder.com/api/device-images",
   [string]$DownloadUrl = "https://vintagedecorfinder.com/latest.png",
-  [string]$Destination = "D:\data\AI\codex_projects\android_apk_build\meditaion\latest.png",
+  [string]$Destination = "D:\data\AI\codex_projects\android_apk_build\mibby\latest.png",
   [int]$IntervalSeconds = 15,
   [switch]$Once
 )
