@@ -34,7 +34,6 @@ $rootAssets = @(
   "contact.html",
   "privacy.html",
   "terms.html",
-  "affiliate-disclosure.html",
   "index.html",
   "apk-page.txt",
   "apk-tools.js",

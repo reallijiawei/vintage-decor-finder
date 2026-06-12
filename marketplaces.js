@@ -10,29 +10,16 @@
       label: "Etsy",
       searchBase: "https://www.etsy.com/search",
       searchParam: "q",
-      affiliateParams: {},
     },
     eBay: {
       label: "eBay",
       searchBase: "https://www.ebay.com/sch/i.html",
       searchParam: "_nkw",
-      affiliateParams: {
-        mkcid: "1",
-        mkrid: "711-53200-19255-0",
-        siteid: "0",
-        campid: "5339152947",
-        customid: "vdf",
-        toolid: "10001",
-        mkevt: "1",
-      },
     },
     Amazon: {
       label: "Amazon",
       searchBase: "https://www.amazon.com/s",
       searchParam: "k",
-      affiliateParams: {
-        tag: "vintagedecorf-20",
-      },
     },
   };
 
@@ -42,10 +29,6 @@
 
     const url = new URL(config.searchBase);
     url.searchParams.set(config.searchParam, query);
-
-    Object.entries(config.affiliateParams).forEach(([key, value]) => {
-      if (value) url.searchParams.set(key, value);
-    });
 
     return url.toString();
   }

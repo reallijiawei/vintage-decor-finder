@@ -192,7 +192,6 @@ const staticPages = [
   ["contact", "0.3"],
   ["privacy", "0.2"],
   ["terms", "0.2"],
-  ["affiliate-disclosure", "0.2"],
 ];
 
 const styleNotes = {
@@ -378,7 +377,6 @@ function page(title, description, urlPath, body, structuredData = [], options = 
         <a href="/contact">Contact</a>
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
-        <a href="/affiliate-disclosure">Affiliate Disclosure</a>
       </nav>
     </footer>
     <script src="../../tracking.js?v=20260511-outbound-clicks"></script>
@@ -389,10 +387,7 @@ function page(title, description, urlPath, body, structuredData = [], options = 
 }
 
 function marketplaceLinks(query) {
-  return `
-    ${marketplaceLinkButtons(query)}
-    <p class="affiliate-note">Some marketplace links may be affiliate links. This does not affect your price.</p>
-  `;
+  return marketplaceLinkButtons(query);
 }
 
 function marketplaceLinkButtons(query) {
@@ -608,7 +603,6 @@ for (const guide of guidePages) {
       ${guide.keywords.map((keyword) => `
       <h3>${titleCase(keyword)}</h3>
       ${marketplaceLinkButtons(keyword)}`).join("")}
-      <p class="affiliate-note">Some marketplace links may be affiliate links. This does not affect your price.</p>
     </section>
     ${linkList("Related style and room pages", guide.relatedStyles.map((slug) => {
       const style = stylePages.find(([itemSlug]) => itemSlug === slug);
